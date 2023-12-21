@@ -1,0 +1,157 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+<ul class="breadcrumb">
+    <li><a href="#">Home</a></li>                    
+    <li class="active">Dashboard</li>
+</ul>
+<!-- END BREADCRUMB -->                       
+<div class="page-title">                    
+    <h2><span class="fa fa-arrow-circle-o-left"></span> Manage Departments</h2>
+</div>                   
+
+
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+
+    <div class="row">
+        <div class="col-md-12">
+            
+            <form class="form-horizontal">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><strong>New </strong> Departments</h3>
+                    <ul class="panel-controls">
+                        <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                    </ul>
+                </div>
+                <div class="panel-body">                                                                        
+                    
+                    <div class="row">
+                        
+                        <div class="col-md-6">
+                            
+                            <div class="form-group">
+                                <div class="col-md-11 col-xs-12">                                                                                                                                                        
+                                    <input type="text" class="form-control" value="John"/>                                                    
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="col-md-11 col-xs-12">                                            
+                                    <input type="text" class="form-control" value="Doe"/>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+
+                </div>
+                <div class="panel-footer">
+                    <button class="btn btn-default">Clear Form</button>                                    
+                    <button class="btn btn-primary pull-right">Submit</button>
+                </div>
+            </div>
+            </form>
+            <div class="panel panel-default">
+                <div class="panel-heading">                                
+                    <h3 class="panel-title">Default</h3>
+                    <ul class="panel-controls">
+                        <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                        <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                        <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                    </ul>                                
+                </div>
+                <div class="panel-body">
+                    <table class="table datatable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Departments Name</th>
+                                <th>Code</th>
+                                <th>Status</th>
+                                <th>Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            
+                            <tr>
+                                <td>1</td>
+                                <td>Computer Science</td>
+                                <td>Hod</td>
+                                <td><span class="label label-danger">Deactive</span></td>
+                                <td>
+                                    <a href="" >                                    
+                                                                 
+                                            <button class="btn btn-info "><span class="fa fa-pencil"></span></button>
+                                                                            
+                                    </a>
+                                    
+                                    <a href="/wsdas" onclick="return delete_row()" >                                    
+                                                                 
+                                        <button class="btn btn-danger "><span class="glyphicon glyphicon-trash"></span></button>
+                                                                        
+                                    </a>
+                                    
+                                    <a href="" class="btn btn-tool" id="deleteButton1" onclick="return delAlert()">
+                                      <i class="fas fa-trash"></i>
+                                    </a></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>HUman Science</td>
+                                <td>Hod</td>
+                                <td><span class="label label-success label-form">Active</span></td>
+                                <td>                    
+                                            <button class="btn btn-info "><span class="fa fa-pencil"></span></button>
+                                  
+                                    
+                                    
+                                    <a href="" onclick="return delAlert()" >                                    
+                                                                 
+                                        <button class="btn btn-danger "><span class="glyphicon glyphicon-trash"></span></button>
+                                                                        
+                                    </a>
+                                    
+                                    <a href="" class="btn btn-tool" id="deleteButton1" onclick="return delAlert()">
+                                      <i class="fas fa-trash"></i>
+                                    </a></td>
+                            </tr>
+                           
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+
+</div>
+
+{% endblock %}
+{% block message %}
+
+<div class="message-box animated fadeIn" data-sound="alert" id="mb-remove-row">
+    <div class="mb-container">
+        <div class="mb-middle">
+            <div class="mb-title"><span class="fa fa-times"></span> Remove <strong>Data</strong> ?</div>
+            <div class="mb-content">
+                <p>Are you sure you want to remove this row?</p>                    
+                <p>Press Yes if you sure.</p>
+            </div>
+            <div class="mb-footer">
+                <div class="pull-right">
+                    <button class="btn btn-success btn-lg mb-control-yes">Yes</button>
+                    <button class="btn btn-default btn-lg mb-control-close">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
