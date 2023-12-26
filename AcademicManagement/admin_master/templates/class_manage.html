@@ -6,7 +6,7 @@
 </ul>
 <!-- END BREADCRUMB -->                       
 <div class="page-title">                    
-    <h2><span class="fa fa-arrow-circle-o-left"></span> Manage Departments</h2>
+    <h2><span class="fa fa-arrow-circle-o-left"></span> Manage Class</h2>
 </div>                   
 
 
@@ -15,11 +15,10 @@
 
     <div class="row">
         <div class="col-md-12">
-            
             <form class="form-horizontal">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    {% comment %} <h3 class="panel-title"><strong>New </strong> Departments</h3> {% endcomment %}
+                    {% comment %} <h3 class="panel-title"><strong>New </strong> Class</h3> {% endcomment %}
                     <ul class="panel-controls">
                         <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
                     </ul>
@@ -27,26 +26,14 @@
                 <div class="panel-body">                                                                        
                     
                     <div class="row">
-                        
-                        <div class="col-md-6">
-                            
+                        <div class="col-md-12 px-5 ">
                             <div class="form-group">
-                                <div class="col-md-11 col-xs-12">                                                                                                                                                        
-                                    <input type="text" class="form-control" placeholder="Department Name"/>                                                    
-                                </div>
+                                <input type="text" class="form-control" placeholder="Class Name"/>
                             </div>
-                            
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <div class="col-md-11 col-xs-12">                                            
-                                    <input type="text" class="form-control" placeholder="Department Code"/>
-                                </div>
-                            </div>
-                            
-                        </div>
-                        
                     </div>
+                    
+                    
 
                 </div>
                 <div class="panel-footer">
@@ -69,8 +56,8 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Departments Name</th>
-                                <th>Code</th>
+                                <th>Class Name</th>
+                                
                                 <th>Status</th>
                                 <th>Action</th>
 
@@ -81,14 +68,11 @@
                             
                             <tr>
                                 <td>1</td>
-                                <td>Computer Science</td>
-                                <td>Hod</td>
+                                <td>Class</td>
+                                
                                 <td><span class="label label-danger">Deactive</span></td>
-                                <td>
-                                                                     
-                                                                 
-                                    <button class="btn btn-info " data-toggle="modal" data-target="#modal-default"><span class="fa fa-pencil"></span></button>
-                                                                            
+                                <td>                           
+                                    <button class="btn btn-info " data-toggle="modal" data-target="#modal-default"><span class="fa fa-pencil"></span></button>                               
                                     
                                     <a   onclick="return delete_row()">                                    
                                                                  
@@ -101,8 +85,8 @@
                             </tr>
                             <tr>
                                 <td>2</td>
-                                <td>HUman Science</td>
-                                <td>Hod</td>
+                                <td>Class</td>
+                               
                                 <td><span class="label label-success label-form">Active</span></td>
                                 <td>                    
                                             <button class="btn btn-info "><span class="fa fa-pencil"></span></button>
@@ -162,39 +146,31 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-          <h4 class="modal-title" id="myModalLabel">Edit Department</h4>
+          <h4 class="modal-title" id="myModalLabel">Edit Class</h4>
         </div>
         <div class="modal-body">
             <div class="row custom-margin-bottom">
                 <div class="col-md-6">
                     <div class="form-group">
                         <div class="col-md-12 col-xs-12">
-                            <input type="text" class="form-control"  placeholder="Department Name"/>
+                            <input type="text" class="form-control"  placeholder="Class Name"/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <div class="col-md-12 col-xs-12">
-                            <input type="text" class="form-control" placeholder="Department Code"/>
+                        <div class="col-md-12 col-xs-12">                                                                                            
+                            <select class="form-control select">
+                                <option>Active</option>
+                                <option>Deactive</option>
+                                
+                            </select>
                         </div>
                     </div>
                 </div>
             </div>
         
-            <div class="row">
-                <div class="col-md-12">
-                <div class="form-group">
-                    <div class="col-md-12 col-xs-12">                                                                                            
-                        <select class="form-control select">
-                            <option>Active</option>
-                            <option>Deactive</option>
-                            
-                        </select>
-                    </div>
-                </div>
-            </div>
-            </div>
+            
         </div>
         
         <div class="modal-footer">

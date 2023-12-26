@@ -6,7 +6,7 @@
 </ul>
 <!-- END BREADCRUMB -->                       
 <div class="page-title">                    
-    <h2><span class="fa fa-arrow-circle-o-left"></span> Manage Departments</h2>
+    <h2><span class="fa fa-arrow-circle-o-left"></span> Manage Employee Categorys</h2>
 </div>                   
 
 
@@ -19,7 +19,7 @@
             <form class="form-horizontal">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    {% comment %} <h3 class="panel-title"><strong>New </strong> Departments</h3> {% endcomment %}
+                    {% comment %} <h3 class="panel-title"><strong>New </strong> Employee Categorys</h3> {% endcomment %}
                     <ul class="panel-controls">
                         <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
                     </ul>
@@ -32,19 +32,24 @@
                             
                             <div class="form-group">
                                 <div class="col-md-11 col-xs-12">                                                                                                                                                        
-                                    <input type="text" class="form-control" placeholder="Department Name"/>                                                    
+                                    <input type="text" class="form-control" placeholder="Employee Category Name"/>                                                    
                                 </div>
                             </div>
                             
                         </div>
+  
                         <div class="col-md-6">
                             <div class="form-group">
-                                <div class="col-md-11 col-xs-12">                                            
-                                    <input type="text" class="form-control" placeholder="Department Code"/>
+                                <div class="col-md-12 col-xs-12">                                                                                            
+                                    <select class="form-control select">
+                                        <option>--Area--</option>
+                                        <option>--Area--</option>
+                                        
+                                    </select>
                                 </div>
                             </div>
-                            
                         </div>
+                        
                         
                     </div>
 
@@ -69,8 +74,8 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Departments Name</th>
-                                <th>Code</th>
+                                <th>Employee Categorys Name</th>
+                                <th>Area</th>
                                 <th>Status</th>
                                 <th>Action</th>
 
@@ -81,8 +86,8 @@
                             
                             <tr>
                                 <td>1</td>
-                                <td>Computer Science</td>
-                                <td>Hod</td>
+                                <td>Employee Category</td>
+                                <td>Teacher</td>
                                 <td><span class="label label-danger">Deactive</span></td>
                                 <td>
                                                                      
@@ -101,8 +106,8 @@
                             </tr>
                             <tr>
                                 <td>2</td>
-                                <td>HUman Science</td>
-                                <td>Hod</td>
+                                <td>Employee Category</td>
+                                <td>Other</td>
                                 <td><span class="label label-success label-form">Active</span></td>
                                 <td>                    
                                             <button class="btn btn-info "><span class="fa fa-pencil"></span></button>
@@ -162,21 +167,25 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-          <h4 class="modal-title" id="myModalLabel">Edit Department</h4>
+          <h4 class="modal-title" id="myModalLabel">Edit Employee Category</h4>
         </div>
         <div class="modal-body">
             <div class="row custom-margin-bottom">
                 <div class="col-md-6">
                     <div class="form-group">
                         <div class="col-md-12 col-xs-12">
-                            <input type="text" class="form-control"  placeholder="Department Name"/>
+                            <input type="text" class="form-control"  placeholder="Employee Category Name"/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <div class="col-md-12 col-xs-12">
-                            <input type="text" class="form-control" placeholder="Department Code"/>
+                        <div class="col-md-12 col-xs-12">                                                                                            
+                            <select class="form-control select">
+                                <option>Accountent</option>
+                                <option>Teacher</option>
+                                
+                            </select>
                         </div>
                     </div>
                 </div>
