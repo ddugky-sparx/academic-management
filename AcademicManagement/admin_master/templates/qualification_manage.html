@@ -15,7 +15,8 @@
 
     <div class="row">
         <div class="col-md-12">
-            <form class="form-horizontal">
+        <form class="form-horizontal" method="post" enctype="multipart/form-data" id="myForm">
+                {% csrf_token %}
             <div class="panel panel-default">
                 <div class="panel-heading">
                     {% comment %} <h3 class="panel-title"><strong>New </strong> Qualification</h3> {% endcomment %}
@@ -28,7 +29,7 @@
                     <div class="row">
                         <div class="col-md-12 px-5 ">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Qualification Name"/>
+                                <input type="text" name='qualification_name'  autofocus class="form-control" placeholder="Qualification Name"/>
                             </div>
                         </div>
                     </div>
@@ -37,11 +38,11 @@
 
                 </div>
                 <div class="panel-footer">
-                    <button class="btn btn-default">Clear Form</button>                                    
+                    <input type="reset" value="Clear Form" class="btn btn-default">                                 
                     <button class="btn btn-primary pull-right">Submit</button>
                 </div>
             </div>
-            </form>
+        </form>
             <div class="panel panel-default">
                 <div class="panel-heading">                                
                     <h3 class="panel-title">Default</h3>
@@ -64,46 +65,30 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
-                            
+                            {% for cademic_qualification in academic_qualifications %}
                             <tr>
-                                <td>1</td>
-                                <td>Qualification</td>
-                                
-                                <td><span class="label label-danger">Deactive</span></td>
-                                <td>                           
-                                    <button class="btn btn-info " data-toggle="modal" data-target="#modal-default"><span class="fa fa-pencil"></span></button>                               
-                                    
-                                    <a   onclick="return delete_row()">                                    
-                                                                 
-                                        <button class="btn btn-danger "><span class="glyphicon glyphicon-trash"></span></button>
-                                                                        
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ cademic_qualification.qualification_name }}</td>
+                                <td>
+                                    {% if cademic_qualification.is_active %}
+                                    <span class="label label-success label-form">Active</span>
+                                    {% else %}
+                                    <span class="label label-danger ">Deactive</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <button class="btn btn-info" data-toggle="modal" data-target="#modal-default">
+                                        <span class="fa fa-pencil"></span>
+                                    </button>
+                                    <a onclick="return delete_row()">
+                                        <button class="btn btn-danger">
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                        </button>
                                     </a>
                                 </td>
-                                    
-                                    
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Qualification</td>
-                               
-                                <td><span class="label label-success label-form">Active</span></td>
-                                <td>                    
-                                            <button class="btn btn-info "><span class="fa fa-pencil"></span></button>
-                                  
-                                    
-                                    
-                                    <a href="" onclick="return delAlert()" >                                    
-                                                                 
-                                        <button class="btn btn-danger "><span class="glyphicon glyphicon-trash"></span></button>
-                                                                        
-                                    </a>
-                                    
-                                    <a href="" class="btn btn-tool" id="deleteButton1" onclick="return delAlert()">
-                                      <i class="fas fa-trash"></i>
-                                    </a></td>
-                            </tr>
-                           
+                            {% endfor %}
+                             
                             
                         </tbody>
                     </table>
@@ -153,7 +138,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <div class="col-md-12 col-xs-12">
-                            <input type="text" class="form-control"  placeholder="Qualification Name"/>
+                            <input type="text" autofocus class="form-control"  placeholder="Qualification Name"/>
                         </div>
                     </div>
                 </div>

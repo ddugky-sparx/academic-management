@@ -129,3 +129,12 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+#constant
+EMPLOYEE_CATEGORY_ACCOUNTENT=1
+EMPLOYEE_CATEGORY_TEACHER=2
+EMPLOYEE_CATEGORY_LIBRARY=3
+EMPLOYEE_CATEGORY_CAFETERIA=4
+EMPLOYEE_CATEGORY_OTHER=5
+MY_CONSTANT = "Hello from settings.py!"

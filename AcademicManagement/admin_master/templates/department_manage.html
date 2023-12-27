@@ -16,7 +16,8 @@
     <div class="row">
         <div class="col-md-12">
             
-            <form class="form-horizontal">
+            <form class="form-horizontal" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
             <div class="panel panel-default">
                 <div class="panel-heading">
                     {% comment %} <h3 class="panel-title"><strong>New </strong> Departments</h3> {% endcomment %}
@@ -32,7 +33,7 @@
                             
                             <div class="form-group">
                                 <div class="col-md-11 col-xs-12">                                                                                                                                                        
-                                    <input type="text" class="form-control" placeholder="Department Name"/>                                                    
+                                    <input type="text" required autofocus name='department_name' class="form-control" placeholder="Department Name"/>                                                    
                                 </div>
                             </div>
                             
@@ -40,7 +41,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="col-md-11 col-xs-12">                                            
-                                    <input type="text" class="form-control" placeholder="Department Code"/>
+                                    <input type="text" required name="department_code" class="form-control" placeholder="Department Code"/>
                                 </div>
                             </div>
                             
@@ -50,7 +51,7 @@
 
                 </div>
                 <div class="panel-footer">
-                    <button class="btn btn-default">Clear Form</button>                                    
+                    <input type="reset" value="Clear Form" class="btn btn-default">                                 
                     <button class="btn btn-primary pull-right">Submit</button>
                 </div>
             </div>
@@ -76,51 +77,31 @@
 
                             </tr>
                         </thead>
-                        <tbody>
-                            
-                            
+                        <tbody> 
+                            {% for department in academic_department %}
                             <tr>
-                                <td>1</td>
-                                <td>Computer Science</td>
-                                <td>Hod</td>
-                                <td><span class="label label-danger">Deactive</span></td>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ department.department_name }}</td>
+                                <td>{{ department.department_code }}</td>
                                 <td>
-                                                                     
-                                                                 
-                                    <button class="btn btn-info " data-toggle="modal" data-target="#modal-default"><span class="fa fa-pencil"></span></button>
-                                                                            
-                                    
-                                    <a   onclick="return delete_row()">                                    
-                                                                 
-                                        <button class="btn btn-danger "><span class="glyphicon glyphicon-trash"></span></button>
-                                                                        
+                                    {% if department.is_active %}
+                                    <span class="label label-success label-form">Active</span>
+                                    {% else %}
+                                    <span class="label label-danger label-form">Deactive</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <button class="btn btn-info" data-toggle="modal" data-target="#modal-default">
+                                        <span class="fa fa-pencil"></span>
+                                    </button>
+                                    <a onclick="return delete_row()">
+                                        <button class="btn btn-danger">
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                        </button>
                                     </a>
                                 </td>
-                                    
-                                    
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>HUman Science</td>
-                                <td>Hod</td>
-                                <td><span class="label label-success label-form">Active</span></td>
-                                <td>                    
-                                            <button class="btn btn-info "><span class="fa fa-pencil"></span></button>
-                                  
-                                    
-                                    
-                                    <a href="" onclick="return delAlert()" >                                    
-                                                                 
-                                        <button class="btn btn-danger "><span class="glyphicon glyphicon-trash"></span></button>
-                                                                        
-                                    </a>
-                                    
-                                    <a href="" class="btn btn-tool" id="deleteButton1" onclick="return delAlert()">
-                                      <i class="fas fa-trash"></i>
-                                    </a></td>
-                            </tr>
-                           
-                            
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>

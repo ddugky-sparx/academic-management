@@ -15,7 +15,8 @@
 
     <div class="row">
         <div class="col-md-12">
-            <form class="form-horizontal">
+            <form class="form-horizontal" enctype="multipart/form-data" method="post">
+                {% csrf_token %}
             <div class="panel panel-default">
                 <div class="panel-heading">
                     {% comment %} <h3 class="panel-title"><strong>New </strong> Designation</h3> {% endcomment %}
@@ -31,7 +32,7 @@
                             
                             <div class="form-group">
                                 <div class="col-md-11 col-xs-12">                                                                                                                                                        
-                                    <input type="text" class="form-control" placeholder="Designation Name"/>                                                    
+                                    <input type="text" name="designation_name" class="form-control" autofocus placeholder="Designation Name"/>                                                    
                                 </div>
                             </div>
                             
@@ -39,7 +40,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="col-md-11 col-xs-12">                                            
-                                    <input type="text" class="form-control" placeholder="Designation Code"/>
+                                    <input type="text" name="designation_code" required class="form-control" placeholder="Designation Code"/>
                                 </div>
                             </div>
                             
@@ -49,7 +50,7 @@
 
                 </div>
                 <div class="panel-footer">
-                    <button class="btn btn-default">Clear Form</button>                                    
+                    <input type="reset" value="Clear Form" class="btn btn-default">                                       
                     <button class="btn btn-primary pull-right">Submit</button>
                 </div>
             </div>
@@ -76,47 +77,30 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
-                            
+                            {% for designation in academic_designation %}
                             <tr>
-                                <td>1</td>
-                                <td>Designation</td>
-                                <td>other</td>
-                                <td><span class="label label-danger">Deactive</span></td>
-                                <td>                           
-                                    <button class="btn btn-info " data-toggle="modal" data-target="#modal-default"><span class="fa fa-pencil"></span></button>                               
-                                    
-                                    <a   onclick="return delete_row()">                                    
-                                                                 
-                                        <button class="btn btn-danger "><span class="glyphicon glyphicon-trash"></span></button>
-                                                                        
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ designation.designation_name }}</td>
+                                <td>{{ designation.designation_code }}</td>
+                                <td>
+                                    {% if designation.is_active %}
+                                    <span class="label label-success label-form">Active</span>
+                                    {% else %}
+                                    <span class="label label-danger label-form">Deactive</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <button class="btn btn-info" data-toggle="modal" data-target="#modal-default">
+                                        <span class="fa fa-pencil"></span>
+                                    </button>
+                                    <a onclick="return delete_row()">
+                                        <button class="btn btn-danger">
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                        </button>
                                     </a>
                                 </td>
-                                    
-                                    
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Designation</td>
-                                <td>library</td>
-                                <td><span class="label label-success label-form">Active</span></td>
-                                <td>                    
-                                            <button class="btn btn-info "><span class="fa fa-pencil"></span></button>
-                                  
-                                    
-                                    
-                                    <a href="" onclick="return delAlert()" >                                    
-                                                                 
-                                        <button class="btn btn-danger "><span class="glyphicon glyphicon-trash"></span></button>
-                                                                        
-                                    </a>
-                                    
-                                    <a href="" class="btn btn-tool" id="deleteButton1" onclick="return delAlert()">
-                                      <i class="fas fa-trash"></i>
-                                    </a></td>
-                            </tr>
-                           
-                            
+                        {% endfor %}  
                         </tbody>
                     </table>
                 </div>

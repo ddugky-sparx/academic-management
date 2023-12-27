@@ -16,7 +16,8 @@
     <div class="row">
         <div class="col-md-12">
             
-            <form class="form-horizontal">
+            <form class="form-horizontal" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
             <div class="panel panel-default">
                 <div class="panel-heading">
                     {% comment %} <h3 class="panel-title"><strong>New </strong> Employee Categorys</h3> {% endcomment %}
@@ -32,7 +33,7 @@
                             
                             <div class="form-group">
                                 <div class="col-md-11 col-xs-12">                                                                                                                                                        
-                                    <input type="text" class="form-control" placeholder="Employee Category Name"/>                                                    
+                                    <input type="text" required autofocus class="form-control" placeholder="Employee Category Name"/>                                                    
                                 </div>
                             </div>
                             
@@ -41,9 +42,12 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="col-md-12 col-xs-12">                                                                                            
-                                    <select class="form-control select">
-                                        <option>--Area--</option>
-                                        <option>--Area--</option>
+                                    <select class="form-control select" name="area">
+                                        <option value="{{ settings.MY_CONSTANT }}">{{ settings.MY_CONSTANT }}</option>
+                                        <option value="{{settings.EMPLOYEE_CATEGORY_CAFETERIA}}">CAFTERIA</option>
+                                        <option value="{{settings.EMPLOYEE_CATEGORY_TEACHER}}">TEACHER</option>
+                                        <option value="{{settings.EMPLOYEE_CATEGORY_LIBRARY}}">LIBRARY</option>
+                                        <option value="{{settings.EMPLOYEE_CATEGORY_OTHER}}">OTHER</option>
                                         
                                     </select>
                                 </div>
@@ -55,7 +59,7 @@
 
                 </div>
                 <div class="panel-footer">
-                    <button class="btn btn-default">Clear Form</button>                                    
+                    <input type="reset" value="Clear Form" class="btn btn-default">                                   
                     <button class="btn btn-primary pull-right">Submit</button>
                 </div>
             </div>
