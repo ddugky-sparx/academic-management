@@ -29,5 +29,15 @@ class AcademicDivision(models.Model):
 
 
 class AcademicEmployeeCategory(models.Model):
-    name = models.CharField(max_length=255)
-    area = models.CharField(max_length=255)
+    EMPLOYEE_CATEGORY_CHOICES = [
+        (1, 'Accountant'),
+        (2, 'Cafeteria'),
+        (3, 'Teacher'),
+        (4, 'Library'),
+        (5, 'Other'),
+    ]
+
+
+    employee_category_name = models.CharField(max_length=255)
+    employee_category_area = models.IntegerField(choices=EMPLOYEE_CATEGORY_CHOICES)
+    is_active = models.BooleanField(default=True)

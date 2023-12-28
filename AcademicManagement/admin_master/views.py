@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from .models import AcademicClass,AcademicDepartment,AcademicDesignation,AcademicQualification,AcademicDivision
+from .models import AcademicClass,AcademicDepartment,AcademicDesignation,AcademicQualification,AcademicDivision,AcademicEmployeeCategory
+from django.conf import settings
 # Create your views here.
 def department_manage(request):
     message = None
@@ -137,11 +138,30 @@ def division_manage(request):
 
 
 def employee_category_manage(request):
+    message = None
+    academic_employee_category = AcademicEmployeeCategory.objects.all()
+
     if request.method == 'POST':
-        name = request.POST.get('name')
-        area = request.POST.get('area')
-        print(area)
-       
+        employee_category_name = request.POST.get('category_name', '').strip()
+        employee_category_area = request.POST.get('category_area', '').strip()
+        print(type(employee_category_name))
+        if not employee_category_name or not employee_category_area:
+            message = 'Both Employee Name and Area are required.'
+        elif AcademicEmployeeCategory.objects.filter(employee_category_name__iexact=employee_category_name).exists():
+            message = 'Employee Name already exists.'
+        elif AcademicEmployeeCategory.objects.exclude(employee_category_area=5).filter(employee_category_area__iexact=employee_category_area).exists():
+            message = 'Employee Area already exists.'
+        else:
+            AcademicEmployeeCategory.objects.create(
+                employee_category_name=employee_category_name,
+                employee_category_area=employee_category_area
+            )
+            message = 'Employee added successfully.'
 
-    return render(request,'employee_category_manage.html')
+    context = {
+        'message': message,
+        'academic_employee_categorys': academic_employee_category,
+        'settings': settings
+    }
 
+    return render(request, 'employee_category_manage.html', context)

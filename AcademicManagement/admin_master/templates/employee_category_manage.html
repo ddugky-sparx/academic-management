@@ -1,5 +1,6 @@
 {% extends 'admin_base.html' %}
 {% block content %}
+{% load static %}
 <ul class="breadcrumb">
     <li><a href="#">Home</a></li>                    
     <li class="active">Dashboard</li>
@@ -33,7 +34,7 @@
                             
                             <div class="form-group">
                                 <div class="col-md-11 col-xs-12">                                                                                                                                                        
-                                    <input type="text" required autofocus class="form-control" placeholder="Employee Category Name"/>                                                    
+                                    <input type="text" name="category_name" required autofocus class="form-control" placeholder="Employee Category Name"/>                                                    
                                 </div>
                             </div>
                             
@@ -42,12 +43,12 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="col-md-12 col-xs-12">                                                                                            
-                                    <select class="form-control select" name="area">
-                                        <option value="{{ settings.MY_CONSTANT }}">{{ settings.MY_CONSTANT }}</option>
-                                        <option value="{{settings.EMPLOYEE_CATEGORY_CAFETERIA}}">CAFTERIA</option>
-                                        <option value="{{settings.EMPLOYEE_CATEGORY_TEACHER}}">TEACHER</option>
-                                        <option value="{{settings.EMPLOYEE_CATEGORY_LIBRARY}}">LIBRARY</option>
-                                        <option value="{{settings.EMPLOYEE_CATEGORY_OTHER}}">OTHER</option>
+                                    <select class="form-control select" name="category_area">
+                                        <option value="{{ settings.EMPLOYEE_CATEGORY_ACCOUNTANT }}">ACCOUNTANT</option>
+                                        <option value="{{ settings.EMPLOYEE_CATEGORY_CAFETERIA }}">CAFTERIA</option>
+                                        <option value="{{ settings.EMPLOYEE_CATEGORY_TEACHER }}">TEACHER</option>
+                                        <option value="{{ settings.EMPLOYEE_CATEGORY_LIBRARY }}">LIBRARY</option>
+                                        <option value="{{ settings.EMPLOYEE_CATEGORY_OTHER }}">OTHER</option>
                                         
                                     </select>
                                 </div>
@@ -86,49 +87,31 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
-                            
-                            <tr>
-                                <td>1</td>
-                                <td>Employee Category</td>
-                                <td>Teacher</td>
-                                <td><span class="label label-danger">Deactive</span></td>
-                                <td>
-                                                                     
-                                                                 
-                                    <button class="btn btn-info " data-toggle="modal" data-target="#modal-default"><span class="fa fa-pencil"></span></button>
-                                                                            
-                                    
-                                    <a   onclick="return delete_row()">                                    
-                                                                 
-                                        <button class="btn btn-danger "><span class="glyphicon glyphicon-trash"></span></button>
-                                                                        
-                                    </a>
-                                </td>
-                                    
-                                    
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Employee Category</td>
-                                <td>Other</td>
-                                <td><span class="label label-success label-form">Active</span></td>
-                                <td>                    
-                                            <button class="btn btn-info "><span class="fa fa-pencil"></span></button>
-                                  
-                                    
-                                    
-                                    <a href="" onclick="return delAlert()" >                                    
-                                                                 
-                                        <button class="btn btn-danger "><span class="glyphicon glyphicon-trash"></span></button>
-                                                                        
-                                    </a>
-                                    
-                                    <a href="" class="btn btn-tool" id="deleteButton1" onclick="return delAlert()">
-                                      <i class="fas fa-trash"></i>
-                                    </a></td>
-                            </tr>
-                           
+                            {% for category in academic_employee_categorys %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ category.employee_category_name }}</td>
+                                    <td>{{ category.get_employee_category_area_display }}</td>
+                                    <td>
+                                        {% if category.is_active %}
+                                            <span class="label label-success">Active</span>
+                                        {% else %}
+                                            <span class="label label-danger">Deactive</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-info" data-toggle="modal" data-target="#modal-default">
+                                            <span class="fa fa-pencil"></span>
+                                        </button>
+                                        
+                                        <a onclick="return delete_row()">
+                                            <button class="btn btn-danger">
+                                                <span class="glyphicon glyphicon-trash"></span>
+                                            </button>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
                             
                         </tbody>
                     </table>
