@@ -2,8 +2,9 @@
 {% block content %}
 {% load static %}
 <ul class="breadcrumb">
-    <li><a href="#">Home</a></li>                    
-    <li class="active">Dashboard</li>
+    <li><a href="#">Home</a></li>     
+    <li class="active">Master</li>               
+    <li class="active">Employee Categorys</li>
 </ul>
 <!-- END BREADCRUMB -->                       
 <div class="page-title">                    
@@ -21,7 +22,7 @@
                 {% csrf_token %}
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    {% comment %} <h3 class="panel-title"><strong>New </strong> Employee Categorys</h3> {% endcomment %}
+                    <h3 class="panel-title"><strong>New </strong> Employee Categorys</h3>
                     <ul class="panel-controls">
                         <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
                     </ul>

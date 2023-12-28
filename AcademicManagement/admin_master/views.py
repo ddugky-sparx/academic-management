@@ -3,7 +3,8 @@ from .models import AcademicClass,AcademicDepartment,AcademicDesignation,Academi
 from django.conf import settings
 # Create your views here.
 def department_manage(request):
-    message = None
+    success_message=None
+    error_message = None
     academic_department = AcademicDepartment.objects.all()
     if request.method == 'POST':
         department_name = request.POST.get('department_name','').strip()
@@ -11,11 +12,11 @@ def department_manage(request):
         
         # Server-side validation
         if not department_name or not department_code:
-            message ='Both Department Name and Code are required.'
+            error_message ='Both Department Name and Code are required.'
         elif AcademicDepartment.objects.filter(department_name__iexact=department_name).exists():
-            message='Department Name already exists.'
+            error_message='Department Name already exists.'
         elif AcademicDepartment.objects.filter(department_code__iexact=department_code).exists():
-            message='Department Code already exists.'
+            error_message='Department Code already exists.'
         else:
            
             # Create the department object
@@ -23,12 +24,12 @@ def department_manage(request):
                 department_name=department_name,
                 department_code=department_code
             )
-
-            message='Department added successfully.'
+            success_message='Department added successfully.'
 
             
     context = {
-        'message': message,
+        'errormessage': error_message,
+        'successmessage': success_message,
         'academic_department': academic_department,
     }
 
@@ -36,18 +37,19 @@ def department_manage(request):
 
 
 def designation_manage(request):
-    message = None
+    success_message=None
+    error_message = None
     academic_designation = AcademicDesignation.objects.all()
     if request.method == 'POST':
         designation_name = request.POST.get('designation_name','').strip()
         designation_code = request.POST.get('designation_code','').strip()
 
         if not designation_name or not designation_code:
-            message ='Both Designation Name and Code are required.'
+            error_message ='Both Designation Name and Code are required.'
         elif AcademicDesignation.objects.filter(designation_name__iexact=designation_name).exists():
-            message='Designation Name already exists.'
+            error_message='Designation Name already exists.'
         elif AcademicDesignation.objects.filter(designation_code__iexact=designation_code).exists():
-            message='Designation Code already exists.'
+            error_message='Designation Code already exists.'
         else:
            
             AcademicDesignation.objects.create(
@@ -55,11 +57,12 @@ def designation_manage(request):
                 designation_code=designation_code
             )
 
-            message='Designation added successfully.'
+            success_message='Designation added successfully.'
 
             
     context = {
-        'message': message,
+        'errormessage': error_message,
+        'successmessage': success_message,
         'academic_designation': academic_designation,
     }
 
@@ -67,46 +70,50 @@ def designation_manage(request):
 
 
 def qualification_manage(request):
-    message = None
+    success_message=None
+    error_message = None
     academic_qualification = AcademicQualification.objects.all()
 
     if request.method == 'POST':
         qualification_name = request.POST.get('qualification_name', '').strip()
 
         if not qualification_name:
-            message = 'Qualification name cannot be empty.'
+            error_message = 'Qualification name cannot be empty.'
         else:
             if AcademicQualification.objects.filter(qualification_name=qualification_name).exists():
-                message = 'Qualification name already exists.'
+                error_message = 'Qualification name already exists.'
             else:
                 AcademicQualification.objects.create(qualification_name=qualification_name)
-                message = 'Qualification created successfully.'
+                success_message = 'Qualification created successfully.'
 
     context = {
-        'message': message,
+        'errormessage': error_message,
+        'successmessage': success_message,
         'academic_qualifications': academic_qualification,
     }
 
     return render(request, 'qualification_manage.html', context)
 
 def class_manage(request):
-    message = None
+    success_message=None
+    error_message = None
     academic_classes = AcademicClass.objects.all()
 
     if request.method == 'POST':
         class_name = request.POST.get('class_name', '').strip()
 
         if not class_name:
-            message = 'Class name cannot be empty.'
+            error_message = 'Class name cannot be empty.'
         else:
             if AcademicClass.objects.filter(class_name=class_name).exists():
-                message = 'Class name already exists.'
+                error_message = 'Class name already exists.'
             else:
                 AcademicClass.objects.create(class_name=class_name)
-                message = 'Class created successfully.'
+                success_message = 'Class created successfully.'
 
     context = {
-        'message': message,
+        'errormessage': error_message,
+        'successmessage': success_message,
         'academic_classes': academic_classes,
     }
 
@@ -114,23 +121,25 @@ def class_manage(request):
 
 
 def division_manage(request):
-    message = None
+    success_message=None
+    error_message = None
     academic_division = AcademicDivision.objects.all()
 
     if request.method == 'POST':
         division_name = request.POST.get('division_name', '').strip()
 
         if not division_name:
-            message = 'Division name cannot be empty.'
+            error_message = 'Division name cannot be empty.'
         else:
             if AcademicDivision.objects.filter(division_name=division_name).exists():
-                message = 'Division name already exists.'
+                error_message = 'Division name already exists.'
             else:
                 AcademicDivision.objects.create(division_name=division_name)
-                message = 'Division created successfully.'
+                success_message = 'Division created successfully.'
 
     context = {
-        'message': message,
+        'errormessage': error_message,
+        'successmessage': success_message,
         'academic_divisions': academic_division,
     }
 
@@ -138,7 +147,8 @@ def division_manage(request):
 
 
 def employee_category_manage(request):
-    message = None
+    success_message=None
+    error_message = None
     academic_employee_category = AcademicEmployeeCategory.objects.all()
 
     if request.method == 'POST':
@@ -146,20 +156,21 @@ def employee_category_manage(request):
         employee_category_area = request.POST.get('category_area', '').strip()
         print(type(employee_category_name))
         if not employee_category_name or not employee_category_area:
-            message = 'Both Employee Name and Area are required.'
+            error_message = 'Both Employee Name and Area are required.'
         elif AcademicEmployeeCategory.objects.filter(employee_category_name__iexact=employee_category_name).exists():
-            message = 'Employee Name already exists.'
+            error_message = 'Employee Name already exists.'
         elif AcademicEmployeeCategory.objects.exclude(employee_category_area=5).filter(employee_category_area__iexact=employee_category_area).exists():
-            message = 'Employee Area already exists.'
+            error_message = 'Employee Area already exists.'
         else:
             AcademicEmployeeCategory.objects.create(
                 employee_category_name=employee_category_name,
                 employee_category_area=employee_category_area
             )
-            message = 'Employee added successfully.'
+            success_message = 'Employee added successfully.'
 
     context = {
-        'message': message,
+        'errormessage': error_message,
+        'successmessage': success_message,
         'academic_employee_categorys': academic_employee_category,
         'settings': settings
     }
