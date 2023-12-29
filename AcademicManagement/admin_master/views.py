@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import AcademicClass,AcademicDepartment,AcademicDesignation,AcademicQualification,AcademicDivision,AcademicEmployeeCategory
 from django.conf import settings
+from django.http import JsonResponse
 # Create your views here.
 def department_manage(request):
     success_message=None
@@ -176,3 +177,16 @@ def employee_category_manage(request):
     }
 
     return render(request, 'employee_category_manage.html', context)
+
+
+#edit view
+def get_class_details(request):
+    class_id = request.GET['class_id']
+    cls_obj=AcademicClass.objects.get(id=class_id)
+    print('Received class_id:', cls_obj)
+    response_data = {
+    'id': cls_obj.id,
+    'name': cls_obj.class_name,
+    'select': 0 if cls_obj.is_enabled else 1,
+    }
+    return JsonResponse(response_data)

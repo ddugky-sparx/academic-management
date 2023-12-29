@@ -23,6 +23,7 @@
             noty({ text: '{{successmessage}}', layout: 'topRight',timeout: 2000 ,type:'success' });
           });
         {% endif %}
+        
         {% if errormessage %}
             document.addEventListener('DOMContentLoaded', function () {
             noty({ text: '{{errormessage}}', layout: 'topRight',timeout: 2000 ,type:'error' });
