@@ -79,7 +79,7 @@
                                 </td>
                                 <td>
                                     <button class="btn btn-info" onclick="edit_pop({{academic_classes.id}})">
-                                        <span class="fa fa-pencil"></span>
+                                        <span id ="spinner{{academic_classes.id}}" class="fa fa-pencil"></span>
                                     </button>
                                     <a onclick="return delete_row()">
                                         <button class="btn btn-danger">
@@ -93,6 +93,7 @@
                     </table>
                 </div>
             </div>
+            <input type="hidden" value="{{ request.scheme }}://{{ request.get_host }}/get_class_details/" name="" id="url">
             
         </div>
         
@@ -137,16 +138,17 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <div class="col-md-12 col-xs-12">
-                            <input type="text" class="form-control" id="editclass" placeholder="Class Name"/>
+                            <input type="hidden"  id="classid"/>
+                            <input type="text" autofocus required class="form-control" id="editclass" placeholder="Class Name"/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <div class="col-md-12 col-xs-12">                                                                                            
-                            <select id="editSelect" class="form-control ">
-                                <option value="0">Active</option>
-                                <option value="1">Deactive</option>
+                            <select id="editSelect" required class="form-control ">
+                                <option value="1">Active</option>
+                                <option value="0">Deactive</option>
                                 
                             </select>
                         </div>
@@ -159,7 +161,8 @@
         
         <div class="modal-footer">
             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary pull-right">Update</button>
+            <button type="button" class="btn btn-primary pull-right" onclick="edit_contact()">Update</button>
+            <input type="hidden" value="{{ request.scheme }}://{{ request.get_host }}/update_class_details/" name="" id="contacturl">
         </div>
         
         

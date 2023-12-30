@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import AcademicClass,AcademicDepartment,AcademicDesignation,AcademicQualification,AcademicDivision,AcademicEmployeeCategory
 from django.conf import settings
 from django.http import JsonResponse
+
 # Create your views here.
 def department_manage(request):
     success_message=None
@@ -66,7 +67,6 @@ def designation_manage(request):
         'successmessage': success_message,
         'academic_designation': academic_designation,
     }
-
     return render(request, 'designation_manage.html',context)
 
 
@@ -111,7 +111,7 @@ def class_manage(request):
             else:
                 AcademicClass.objects.create(class_name=class_name)
                 success_message = 'Class created successfully.'
-
+    
     context = {
         'errormessage': error_message,
         'successmessage': success_message,
@@ -187,6 +187,32 @@ def get_class_details(request):
     response_data = {
     'id': cls_obj.id,
     'name': cls_obj.class_name,
-    'select': 0 if cls_obj.is_enabled else 1,
+    'select': 1 if cls_obj.is_enabled else 0,
+    }
+    return JsonResponse(response_data)
+
+def update_class_details(request):
+    update_id = request.GET['updateId'].strip()
+    update_class = request.GET['updateClass'].strip()
+    update_Status = request.GET['updateStatus'].strip()
+    error_message=None
+    success_message=None
+    if not update_class:
+            error_message = 'Class name cannot be empty.'
+    else:
+        if AcademicClass.objects.exclude(id=update_id).filter(class_name=update_class).exists():
+            error_message = 'Class name already exists.'
+        else:
+            obj= AcademicClass.objects.get(id=update_id)
+            obj.class_name = update_class
+            obj.is_enabled=int(update_Status)
+            obj.save()
+            success_message = 'Class updated successfully.'
+    
+    
+    
+    response_data = {
+    'errormessage': error_message,
+    'successmessage': success_message,
     }
     return JsonResponse(response_data)
