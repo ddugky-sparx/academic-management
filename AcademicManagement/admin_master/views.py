@@ -216,3 +216,10 @@ def update_class_details(request):
     'successmessage': success_message,
     }
     return JsonResponse(response_data)
+
+
+def delete_class(request):
+    delete_id = request.GET['id'].strip()
+    q = AcademicClass.objects.get(id=delete_id)
+    q.delete()
+    return JsonResponse({"message":"deleted sucess fully"})

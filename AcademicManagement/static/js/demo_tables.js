@@ -1,18 +1,34 @@
-function delete_row(){
-        
+function delete_row(id) {
     var box = $("#mb-remove-row");
     box.addClass("open");
-    
-    box.find(".mb-control-yes").on("click",function(){
-        console.log("heloo");
+
+    function delete_contact(id) {
+        var request_url = document.getElementById('deleteurl').value;
+
+        $.ajax({
+            type: "get",
+            url: request_url,
+            data: { "id": id },
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (data) {
+                console.log(data, "error");
+            },
+        });
+    }
+
+    // Unbind the click event to avoid multiple bindings
+    box.find(".mb-control-yes").off("click").on("click", function () {
+        delete_contact(id);
         box.removeClass("open");
-        
-        
-        
+        $("#"+id).hide("slow",function(){
+            $(this).remove();
+        });
     });
-    
-    
 }
+
 
 
 function edit_pop(classId){
@@ -65,7 +81,7 @@ function edit_contact(){
             if(data.errormessage){
                 noty({ text: data.errormessage, layout: 'topRight', timeout: 1000, type: 'error' }).show();
             setTimeout(function () {
-                location.reload();
+                // location.reload();
             }, 3000);
             }
             if(data.successmessage){
@@ -85,4 +101,6 @@ function edit_contact(){
         },
     });
 }
+
+
 

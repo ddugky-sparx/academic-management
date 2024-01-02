@@ -67,7 +67,7 @@
                         </thead>
                         <tbody>
                             {% for academic_classes in academic_classes %}
-                            <tr>
+                            <tr id="{{academic_classes.id}}">
                                 <td>{{ forloop.counter }}</td>
                                 <td>{{ academic_classes.class_name }}</td>
                                 <td>
@@ -81,11 +81,15 @@
                                     <button class="btn btn-info" onclick="edit_pop({{academic_classes.id}})">
                                         <span id ="spinner{{academic_classes.id}}" class="fa fa-pencil"></span>
                                     </button>
-                                    <a onclick="return delete_row()">
+                                    {% if not academic_classes.is_enabled %}
+                                    <a onclick="delete_row({{academic_classes.id}})">
                                         <button class="btn btn-danger">
                                             <span class="glyphicon glyphicon-trash"></span>
                                         </button>
                                     </a>
+                                    
+                                    {% endif %}
+                                    
                                 </td>
                             </tr>
                             {% endfor %}
@@ -114,7 +118,8 @@
             </div>
             <div class="mb-footer">
                 <div class="pull-right">
-                    <button class="btn btn-success btn-lg mb-control-yes">Yes</button>
+                    <input type="hidden" value="{{ request.scheme }}://{{ request.get_host }}/delete_class/" name="" id="deleteurl">
+                    <button  class="btn btn-success btn-lg mb-control-yes">Yes</button>
                     <button class="btn btn-default btn-lg mb-control-close">No</button>
                 </div>
             </div>
