@@ -79,7 +79,7 @@
                         </thead>
                         <tbody>
                             {% for designation in academic_designation %}
-                            <tr>
+                            <tr id="{{designation.id}}">
                                 <td>{{ forloop.counter }}</td>
                                 <td>{{ designation.designation_name }}</td>
                                 <td>{{ designation.designation_code }}</td>
@@ -91,14 +91,16 @@
                                     {% endif %}
                                 </td>
                                 <td>
-                                    <button class="btn btn-info" data-toggle="modal" data-target="#modal-default">
-                                        <span class="fa fa-pencil"></span>
+                                    <button class="btn btn-info" onclick="edit_pop_designation({{designation.id}})">
+                                        <span id ="spinner{{designation.id}}" class="fa fa-pencil"></span>
                                     </button>
-                                    <a onclick="return delete_row()">
+                                    {% if not designation.is_active %}
+                                    <a onclick="delete_designation({{designation.id}})">
                                         <button class="btn btn-danger">
                                             <span class="glyphicon glyphicon-trash"></span>
                                         </button>
                                     </a>
+                                    {% endif %}
                                 </td>
                             </tr>
                         {% endfor %}  
@@ -106,7 +108,7 @@
                     </table>
                 </div>
             </div>
-            
+            <input type="hidden" value="{{ request.scheme }}://{{ request.get_host }}/get_designation_details/" name="" id="url">
         </div>
         
     </div>
@@ -121,11 +123,13 @@
         <div class="mb-middle">
             <div class="mb-title"><span class="fa fa-times"></span> Remove <strong>Data</strong> ?</div>
             <div class="mb-content">
+
                 <p>Are you sure you want to delete?</p>                    
                 <p>Press Yes if you sure.</p>
             </div>
             <div class="mb-footer">
                 <div class="pull-right">
+                    <input type="hidden" value="{{ request.scheme }}://{{ request.get_host }}/delete_designation/" name="" id="deleteurl">
                     <button class="btn btn-success btn-lg mb-control-yes">Yes</button>
                     <button class="btn btn-default btn-lg mb-control-close">No</button>
                 </div>
@@ -150,14 +154,15 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <div class="col-md-12 col-xs-12">
-                            <input type="text" class="form-control"  placeholder="Designation Name"/>
+                            <input type="text" id="edit_name" class="form-control"  placeholder="Designation Name"/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <div class="col-md-12 col-xs-12">
-                            <input type="text" class="form-control" placeholder="Designation Code"/>
+                            <input type="hidden" id="edit_id"/>
+                            <input type="text" id="edit_code" class="form-control" placeholder="Designation Code"/>
                         </div>
                     </div>
                 </div>
@@ -167,9 +172,9 @@
                 <div class="col-md-12">
                 <div class="form-group">
                     <div class="col-md-12 col-xs-12">                                                                                            
-                        <select class="form-control select">
-                            <option>Active</option>
-                            <option>Deactive</option>
+                        <select class="form-control " id="edit_select">
+                            <option value="1">Active</option>
+                            <option value="0">Deactive</option>
                             
                         </select>
                     </div>
@@ -180,7 +185,8 @@
         
         <div class="modal-footer">
             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary pull-right">Update</button>
+            <button type="button" class="btn btn-primary pull-right" onclick="edit_designation()">Update</button>
+            <input type="hidden" value="{{ request.scheme }}://{{ request.get_host }}/update_designation_details/" name="" id="updateurl">
         </div>
         
         

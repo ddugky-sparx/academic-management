@@ -274,3 +274,100 @@ def delete_department(request):
     q = AcademicDepartment.objects.get(id=delete_id)
     q.delete()
     return JsonResponse({"message":"deleted sucess fully"})
+
+
+
+#designation
+
+
+def get_designation_details(request):
+    designation_id = request.GET['designation_id']
+    dep_obj=AcademicDesignation.objects.get(id=designation_id)
+    response_data = {
+    'id': dep_obj.id,
+    'name': dep_obj.designation_name,
+    'code':dep_obj.designation_code,
+    'select': 1 if dep_obj.is_active else 0,
+    }
+    return JsonResponse(response_data)
+
+
+def update_designation_details(request):
+    update_id = request.GET['updateId'].strip()
+    update_name = request.GET['updateName'].strip()
+    update_Status = request.GET['updateStatus'].strip()
+    update_code = request.GET['updateCode'].strip()
+    error_message=None
+    success_message=None
+    if not update_name or not update_code:
+        error_message ='Both Designation Name and Code are required.'
+    elif AcademicDesignation.objects.exclude(id=update_id).filter(designation_name=update_name).exists():
+        error_message='Designation Name already exists.'
+    elif AcademicDesignation.objects.exclude(id=update_id).filter(designation_code=update_code).exists():
+        error_message='Designation Code already exists.'
+    else:
+        obj= AcademicDesignation.objects.get(id=update_id)
+        obj.designation_name = update_name
+        obj.designation_code = update_code
+        obj.is_active=int(update_Status)
+        obj.save()
+        success_message = 'Designation updated successfully.'
+
+    response_data = {
+    'errormessage': error_message,
+    'successmessage': success_message,
+    }
+    return JsonResponse(response_data)
+
+def delete_designation(request):
+    delete_id = request.GET['id'].strip()
+    q = AcademicDesignation.objects.get(id=delete_id)
+    q.delete()
+    return JsonResponse({"message":"deleted sucess fully"})
+
+
+#Qualification
+
+def get_qualification_details(request):
+    qualification_id = request.GET['qualification_id']
+    qualification_obj=AcademicQualification.objects.get(id=qualification_id)
+    response_data = {
+    'id': qualification_obj.id,
+    'name': qualification_obj.qualification_name,
+    'select': 1 if qualification_obj.is_active else 0,
+    }
+    return JsonResponse(response_data)
+
+def update_qualification_details(request):
+    update_id = request.GET['updateId'].strip()
+    update_name = request.GET['updateName'].strip()
+    update_Status = request.GET['updateStatus'].strip()
+    error_message=None
+    success_message=None
+    if not update_name:
+            error_message = 'Class name cannot be empty.'
+    else:
+        if AcademicQualification.objects.exclude(id=update_id).filter(qualification_name=update_name).exists():
+            error_message = 'Class name already exists.'
+        else:
+            obj= AcademicQualification.objects.get(id=update_id)
+            obj.qualification_name = update_name
+            obj.is_active=int(update_Status)
+            obj.save()
+            success_message = 'Class updated successfully.'
+    
+    
+    
+    response_data = {
+    'errormessage': error_message,
+    'successmessage': success_message,
+    }
+    return JsonResponse(response_data)
+
+
+def delete_qualification(request):
+    delete_id = request.GET['id'].strip()
+    q = AcademicQualification.objects.get(id=delete_id)
+    q.delete()
+    return JsonResponse({"message":"deleted sucess fully"})
+

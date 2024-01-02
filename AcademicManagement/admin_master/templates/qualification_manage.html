@@ -66,26 +66,28 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for cademic_qualification in academic_qualifications %}
-                            <tr>
+                            {% for academic_qualification in academic_qualifications %}
+                            <tr id="{{academic_qualification.id}}">
                                 <td>{{ forloop.counter }}</td>
-                                <td>{{ cademic_qualification.qualification_name }}</td>
+                                <td>{{ academic_qualification.qualification_name }}</td>
                                 <td>
-                                    {% if cademic_qualification.is_active %}
+                                    {% if academic_qualification.is_active %}
                                     <span class="label label-success label-form">Active</span>
                                     {% else %}
                                     <span class="label label-danger ">Deactive</span>
                                     {% endif %}
                                 </td>
                                 <td>
-                                    <button class="btn btn-info" data-toggle="modal" data-target="#modal-default">
-                                        <span class="fa fa-pencil"></span>
+                                    <button class="btn btn-info" onclick="edit_pop_qualification({{academic_qualification.id}})">
+                                        <span id ="spinner{{academic_qualification.id}}" class="fa fa-pencil"></span>
                                     </button>
-                                    <a onclick="return delete_row()">
+                                    {% if not academic_qualification.is_active %}
+                                    <a onclick="delete_qualification({{academic_qualification.id}})">
                                         <button class="btn btn-danger">
                                             <span class="glyphicon glyphicon-trash"></span>
                                         </button>
                                     </a>
+                                    {% endif %}
                                 </td>
                             </tr>
                             {% endfor %}
@@ -97,7 +99,8 @@
             </div>
             
         </div>
-        
+        <input type="hidden" value="{{ request.scheme }}://{{ request.get_host }}/get_qualification_details/" name="" id="url">
+
     </div>
 
 </div>
@@ -115,6 +118,7 @@
             </div>
             <div class="mb-footer">
                 <div class="pull-right">
+                    <input type="hidden" value="{{ request.scheme }}://{{ request.get_host }}/delete_qualification/" name="" id="deleteurl">
                     <button class="btn btn-success btn-lg mb-control-yes">Yes</button>
                     <button class="btn btn-default btn-lg mb-control-close">No</button>
                 </div>
@@ -139,16 +143,17 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <div class="col-md-12 col-xs-12">
-                            <input type="text" autofocus class="form-control"  placeholder="Qualification Name"/>
+                            <input type="hidden"  id="edit_id"/>
+                            <input type="text" id="edit_name" autofocus class="form-control"  placeholder="Qualification Name"/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <div class="col-md-12 col-xs-12">                                                                                            
-                            <select class="form-control select">
-                                <option>Active</option>
-                                <option>Deactive</option>
+                            <select class="form-control " id="edit_select">
+                                <option value="1">Active</option>
+                                <option value="0">Deactive</option>
                                 
                             </select>
                         </div>
@@ -161,7 +166,8 @@
         
         <div class="modal-footer">
             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary pull-right">Update</button>
+            <button type="button" class="btn btn-primary pull-right" onclick="edit_qualification()">Update</button>
+            <input type="hidden" value="{{ request.scheme }}://{{ request.get_host }}/update_qualification_details/" name="" id="contacturl">
         </div>
         
         
