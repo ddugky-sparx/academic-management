@@ -223,3 +223,54 @@ def delete_class(request):
     q = AcademicClass.objects.get(id=delete_id)
     q.delete()
     return JsonResponse({"message":"deleted sucess fully"})
+
+
+
+
+#department
+def get_departments_details(request):
+    department_id = request.GET['department_id']
+    dep_obj=AcademicDepartment.objects.get(id=department_id)
+    response_data = {
+    'id': dep_obj.id,
+    'name': dep_obj.department_name,
+    'code':dep_obj.department_code,
+    'select': 1 if dep_obj.is_active else 0,
+    }
+    return JsonResponse(response_data)
+
+
+def update_departments_details(request):
+    update_id = request.GET['updateId'].strip()
+    update_name = request.GET['updateName'].strip()
+    update_Status = request.GET['updateStatus'].strip()
+    update_code = request.GET['updateCode'].strip()
+    error_message=None
+    success_message=None
+    if not update_name or not update_code:
+        error_message ='Both Department Name and Code are required.'
+    elif AcademicDepartment.objects.exclude(id=update_id).filter(department_name=update_name).exists():
+        error_message='Department Name already exists.'
+    elif AcademicDepartment.objects.exclude(id=update_id).filter(department_code=update_code).exists():
+        error_message='Department Code already exists.'
+    else:
+        obj= AcademicDepartment.objects.get(id=update_id)
+        obj.department_name = update_name
+        obj.department_code = update_code
+        obj.is_active=int(update_Status)
+        obj.save()
+        success_message = 'Department updated successfully.'
+
+    response_data = {
+    'errormessage': error_message,
+    'successmessage': success_message,
+    }
+    return JsonResponse(response_data)
+
+
+
+def delete_department(request):
+    delete_id = request.GET['id'].strip()
+    q = AcademicDepartment.objects.get(id=delete_id)
+    q.delete()
+    return JsonResponse({"message":"deleted sucess fully"})

@@ -80,7 +80,7 @@
                         </thead>
                         <tbody> 
                             {% for department in academic_department %}
-                            <tr>
+                            <tr id="{{department.id}}">
                                 <td>{{ forloop.counter }}</td>
                                 <td>{{ department.department_name }}</td>
                                 <td>{{ department.department_code }}</td>
@@ -92,14 +92,16 @@
                                     {% endif %}
                                 </td>
                                 <td>
-                                    <button class="btn btn-info" data-toggle="modal" data-target="#modal-default">
-                                        <span class="fa fa-pencil"></span>
+                                    <button class="btn btn-info" onclick="edit_pop_department({{department.id}})">
+                                        <span id ="spinner{{department.id}}" class="fa fa-pencil"></span>
                                     </button>
-                                    <a onclick="return delete_row()">
+                                    {% if not department.is_active %}
+                                    <a onclick="delete_department({{department.id}})">
                                         <button class="btn btn-danger">
                                             <span class="glyphicon glyphicon-trash"></span>
                                         </button>
                                     </a>
+                                    {% endif %}
                                 </td>
                             </tr>
                         {% endfor %}
@@ -107,6 +109,7 @@
                     </table>
                 </div>
             </div>
+            <input type="hidden" value="{{ request.scheme }}://{{ request.get_host }}/get_departments_details/" name="" id="url">
             
         </div>
         
@@ -127,6 +130,7 @@
             </div>
             <div class="mb-footer">
                 <div class="pull-right">
+                    <input type="hidden" value="{{ request.scheme }}://{{ request.get_host }}/delete_department/" name="" id="deleteurl">
                     <button class="btn btn-success btn-lg mb-control-yes">Yes</button>
                     <button class="btn btn-default btn-lg mb-control-close">No</button>
                 </div>
@@ -151,14 +155,16 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <div class="col-md-12 col-xs-12">
-                            <input type="text" class="form-control"  placeholder="Department Name"/>
+
+                            <input type="text" required class="form-control" id="edit_name" placeholder="Department Name"/>
+                            <input type="hidden" id="edit_id"/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <div class="col-md-12 col-xs-12">
-                            <input type="text" class="form-control" placeholder="Department Code"/>
+                            <input type="text" class="form-control" required id="edit_code" placeholder="Department Code"/>
                         </div>
                     </div>
                 </div>
@@ -168,10 +174,9 @@
                 <div class="col-md-12">
                 <div class="form-group">
                     <div class="col-md-12 col-xs-12">                                                                                            
-                        <select class="form-control select">
-                            <option>Active</option>
-                            <option>Deactive</option>
-                            
+                        <select required class="form-control" id="edit_select">
+                            <option value="1">Active</option>
+                            <option value="0">Deactive</option>
                         </select>
                     </div>
                 </div>
@@ -181,7 +186,8 @@
         
         <div class="modal-footer">
             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary pull-right">Update</button>
+            <button type="button" class="btn btn-primary pull-right" onclick="edit_department()">Update</button>
+            <input type="hidden" value="{{ request.scheme }}://{{ request.get_host }}/update_departments_details/" name="" id="updateurl">
         </div>
         
         
