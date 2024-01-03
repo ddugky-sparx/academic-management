@@ -371,3 +371,49 @@ def delete_qualification(request):
     q.delete()
     return JsonResponse({"message":"deleted sucess fully"})
 
+
+
+def get_division_details(request):
+    division_id = request.GET['division_id']
+    qualification_obj=AcademicDivision.objects.get(id=division_id)
+    response_data = {
+    'id': qualification_obj.id,
+    'name': qualification_obj.division_name,
+    'select': 1 if qualification_obj.is_active else 0,
+    }
+    return JsonResponse(response_data)
+
+def update_division_details(request):
+    update_id = request.GET['updateId'].strip()
+    update_name = request.GET['updateName'].strip()
+    update_Status = request.GET['updateStatus'].strip()
+    error_message=None
+    success_message=None
+    if not update_name:
+            error_message = 'Division name cannot be empty.'
+    else:
+        if AcademicDivision.objects.exclude(id=update_id).filter(division_name=update_name).exists():
+            error_message = 'Division name already exists.'
+        else:
+            obj= AcademicDivision.objects.get(id=update_id)
+            obj.division_name = update_name
+            obj.is_active=int(update_Status)
+            obj.save()
+            success_message = 'Division updated successfully.'
+    
+    
+    
+    response_data = {
+    'errormessage': error_message,
+    'successmessage': success_message,
+    }
+    return JsonResponse(response_data)
+
+
+def delete_division(request):
+    delete_id = request.GET['id'].strip()
+    q = AcademicDivision.objects.get(id=delete_id)
+    q.delete()
+    return JsonResponse({"message":"deleted sucess fully"})
+
+

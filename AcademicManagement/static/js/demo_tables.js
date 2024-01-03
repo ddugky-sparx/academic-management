@@ -419,3 +419,105 @@ function delete_designation(id) {
         });
     }
     
+
+        //division
+
+        function delete_division(id) {
+            var box = $("#mb-remove-row");
+            box.addClass("open");
+            var request_url = document.getElementById('deleteurl').value;
+        
+                $.ajax({
+                    type: "get",
+                    url: request_url,
+                    data: { "id": id },
+                    dataType: 'json',
+                    success: function (data) {
+                        box.find(".mb-control-yes").off("click").on("click", function () {
+                            box.removeClass("open");
+                            $("#"+id).hide("slow",function(){
+                                $(this).remove();
+                            });
+                        });
+                    },
+                    error: function (data) {
+                        console.log(data, "error");
+                    },
+                });
+            
+        
+    
+           
+        }
+        
+        
+        
+        function edit_pop_division(divisionId){
+            document.getElementById('spinner'+divisionId).className="fa fa-spinner";
+            reqest_url=document.getElementById('url').value
+            $.ajax({
+                type:"get",
+                url:reqest_url,
+                data: { 'division_id': divisionId },
+                dataType: 'json',
+                success: function (data) {
+                    document.getElementById('edit_name').value=data.name;
+        
+                    document.getElementById('edit_id').value=data.id;
+                    document.getElementById('edit_select').value=data.select;
+                    
+                    $('#modal-default').modal('show');
+                    document.getElementById('spinner'+divisionId).className="fa fa-pencil";
+        
+                    
+                },
+                error: function (data) {
+                    console.log(data, "error");
+                },
+            });
+        }
+        
+        
+        function edit_division(){
+            reqest_url =document.getElementById('contacturl').value
+        
+            updateId=document.getElementById('edit_id').value;
+            updateName=document.getElementById('edit_name').value;
+            updateStatus=document.getElementById('edit_select').value
+    
+            updateObject = {
+                "updateId": updateId,
+                "updateName": updateName,
+                "updateStatus": updateStatus
+              };
+            
+            $.ajax({
+                type:"get",
+                url:reqest_url,
+                data:updateObject,
+                dataType: 'json',
+                success: function (data) {
+                    $('#modal-default').modal('hide');
+                    if(data.errormessage){
+                        noty({ text: data.errormessage, layout: 'topRight', timeout: 1000, type: 'error' }).show();
+                    setTimeout(function () {
+                       
+                    }, 3000);
+                    }
+                    if(data.successmessage){
+                        noty({ text: data.successmessage, layout: 'topRight', timeout: 1000, type: 'success' }).show();
+                    setTimeout(function () {
+                        location.reload();
+                    }, 3000);
+        
+                    }
+                    
+                        
+        
+                    
+                },
+                error: function (data) {
+                    console.log(data, "error");
+                },
+            });
+        }

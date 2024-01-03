@@ -19,7 +19,12 @@ urlpatterns = [
     path('delete_designation/', views.delete_designation, name='delete_designation'),
     path('get_qualification_details/', views.get_qualification_details, name='get_qualification_details'),
     path('update_qualification_details/', views.update_qualification_details, name='update_qualification_details'),
-    path('delete_qualification/', views.delete_qualification, name='delete_qualification'),
+    path('delete_qualification/', views.delete_qualification, name='delete_qualification'),   
+    path('get_division_details/', views.get_division_details, name='get_division_details'),
+    path('update_division_details/', views.update_division_details, name='update_division_details'),
+    path('delete_division/', views.delete_division, name='delete_division'),
+
+
 
 
 ]
