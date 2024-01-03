@@ -44,7 +44,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="col-md-12 col-xs-12">                                                                                            
-                                    <select class="form-control select" name="category_area">
+                                    <select class="form-control " name="category_area">
                                         <option value="{{ settings.EMPLOYEE_CATEGORY_ACCOUNTANT }}">ACCOUNTANT</option>
                                         <option value="{{ settings.EMPLOYEE_CATEGORY_CAFETERIA }}">CAFTERIA</option>
                                         <option value="{{ settings.EMPLOYEE_CATEGORY_TEACHER }}">TEACHER</option>
@@ -89,7 +89,7 @@
                         </thead>
                         <tbody>
                             {% for category in academic_employee_categorys %}
-                                <tr>
+                                <tr id="{{category.id}}">
                                     <td>{{ forloop.counter }}</td>
                                     <td>{{ category.employee_category_name }}</td>
                                     <td>{{ category.get_employee_category_area_display }}</td>
@@ -101,15 +101,16 @@
                                         {% endif %}
                                     </td>
                                     <td>
-                                        <button class="btn btn-info" data-toggle="modal" data-target="#modal-default">
-                                            <span class="fa fa-pencil"></span>
+                                        <button class="btn btn-info" onclick="edit_pop_employee_category({{category.id}})">
+                                            <span id ="spinner{{category.id}}" class="fa fa-pencil"></span>
                                         </button>
-                                        
-                                        <a onclick="return delete_row()">
+                                        {% if not category.is_active %}
+                                        <a onclick="delete_employee_category({{category.id}})">
                                             <button class="btn btn-danger">
                                                 <span class="glyphicon glyphicon-trash"></span>
                                             </button>
                                         </a>
+                                        {% endif %}
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -118,7 +119,7 @@
                     </table>
                 </div>
             </div>
-            
+            <input type="hidden" value="{{ request.scheme }}://{{ request.get_host }}/get_employee_category_details/" name="" id="url">
         </div>
         
     </div>
@@ -138,7 +139,8 @@
             </div>
             <div class="mb-footer">
                 <div class="pull-right">
-                    <button class="btn btn-success btn-lg mb-control-yes">Yes</button>
+                    <input type="hidden" value="{{ request.scheme }}://{{ request.get_host }}/delete_employee_category/" name="" id="deleteurl">
+                    <button class="btn btn-success btn-lg mb-control-yes" >Yes</button>
                     <button class="btn btn-default btn-lg mb-control-close">No</button>
                 </div>
             </div>
@@ -162,16 +164,20 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <div class="col-md-12 col-xs-12">
-                            <input type="text" class="form-control"  placeholder="Employee Category Name"/>
+                            <input type="hidden"  id="edit_id"/>
+                            <input type="text" id="edit_name" class="form-control"  placeholder="Employee Category Name"/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <div class="col-md-12 col-xs-12">                                                                                            
-                            <select class="form-control select">
-                                <option>Accountent</option>
-                                <option>Teacher</option>
+                            <select class="form-control " id="edit_area">
+                                <option value="1">ACCOUNTANT</option>
+                                <option value="4">CAFTERIA</option>
+                                <option value="2">TEACHER</option>
+                                <option value="3">LIBRARY</option>
+                                <option value="5">OTHER</option>
                                 
                             </select>
                         </div>
@@ -183,9 +189,9 @@
                 <div class="col-md-12">
                 <div class="form-group">
                     <div class="col-md-12 col-xs-12">                                                                                            
-                        <select class="form-control select">
-                            <option>Active</option>
-                            <option>Deactive</option>
+                        <select class="form-control" id="edit_select">
+                            <option value="1">Active</option>
+                                <option value="0">Deactive</option>
                             
                         </select>
                     </div>
@@ -196,7 +202,8 @@
         
         <div class="modal-footer">
             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary pull-right">Update</button>
+            <button type="button" class="btn btn-primary pull-right" onclick="edit_employee_category()">Update</button>
+            <input type="hidden" value="{{ request.scheme }}://{{ request.get_host }}/update_employee_category_details/" name="" id="contacturl">
         </div>
         
         

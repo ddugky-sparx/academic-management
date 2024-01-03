@@ -23,6 +23,9 @@ urlpatterns = [
     path('get_division_details/', views.get_division_details, name='get_division_details'),
     path('update_division_details/', views.update_division_details, name='update_division_details'),
     path('delete_division/', views.delete_division, name='delete_division'),
+    path('get_employee_category_details/', views.get_employee_category_details, name='get_employee_category_details'),
+    path('update_employee_category_details/', views.update_employee_category_details, name='update_employee_category_details'),
+    path('delete_employee_category/', views.delete_employee_category, name='delete_employee_category'),
 
 
 

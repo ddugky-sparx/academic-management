@@ -417,3 +417,50 @@ def delete_division(request):
     return JsonResponse({"message":"deleted sucess fully"})
 
 
+
+def get_employee_category_details(request):
+    employee_category_id = request.GET['employee_category_id']
+    employee_category_obj=AcademicEmployeeCategory.objects.get(id=employee_category_id)
+    response_data = {
+    'id': employee_category_obj.id,
+    'name': employee_category_obj.employee_category_name,
+    'area':employee_category_obj.employee_category_area,
+    'select': 1 if employee_category_obj.is_active else 0,
+    }
+    return JsonResponse(response_data)
+
+def update_employee_category_details(request):
+    update_id = request.GET['updateId'].strip()
+    update_name = request.GET['updateName'].strip()
+    update_Area = request.GET['updateArea'].strip()
+    update_Status = request.GET['updateStatus'].strip()
+    error_message=None
+    success_message=None
+
+    if not update_name or not update_Area:
+        error_message = 'Both Employee Name and Area are required.'
+    elif AcademicEmployeeCategory.objects.exclude(id=update_id).filter(employee_category_name__iexact=update_name).exists():
+            error_message = 'Employee Name already exists.'
+    elif AcademicEmployeeCategory.objects.exclude(id=update_id).exclude(employee_category_area=5).filter(employee_category_area__iexact=update_Area).exists():
+            error_message = 'Employee Area already exists.'
+    else:
+        obj= AcademicEmployeeCategory.objects.get(id=update_id)
+        obj.employee_category_name = update_name
+        obj.employee_category_area=update_Area
+        obj.is_active=int(update_Status)
+        obj.save()
+        success_message = 'Employee updated successfully.'
+    
+    response_data = {
+    'errormessage': error_message,
+    'successmessage': success_message,
+    }
+    return JsonResponse(response_data)
+
+
+def delete_employee_category(request):
+    delete_id = request.GET['id'].strip()
+    q = AcademicEmployeeCategory.objects.get(id=delete_id)
+    q.delete()
+    return JsonResponse({"message":"deleted sucess fully"})
+

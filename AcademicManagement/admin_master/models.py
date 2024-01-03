@@ -31,9 +31,9 @@ class AcademicDivision(models.Model):
 class AcademicEmployeeCategory(models.Model):
     EMPLOYEE_CATEGORY_CHOICES = [
         (1, 'Accountant'),
-        (2, 'Cafeteria'),
-        (3, 'Teacher'),
-        (4, 'Library'),
+        (4, 'Cafeteria'),
+        (2, 'Teacher'),
+        (3, 'Library'),
         (5, 'Other'),
     ]
 
