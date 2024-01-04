@@ -8,6 +8,7 @@ urlpatterns = [
     path('class/', views.class_manage,name="class"),
     path('division/', views.division_manage,name="division"),
     path('employee-category/', views.employee_category_manage,name="employee-category"),
+    path('subject/', views.subject_manage,name="subject"),
     path('get_class_details/', views.get_class_details, name='get_class_details'),
     path('update_class_details/', views.update_class_details, name='update_class_details'),
     path('delete_class/', views.delete_class, name='delete_class'),
@@ -26,6 +27,9 @@ urlpatterns = [
     path('get_employee_category_details/', views.get_employee_category_details, name='get_employee_category_details'),
     path('update_employee_category_details/', views.update_employee_category_details, name='update_employee_category_details'),
     path('delete_employee_category/', views.delete_employee_category, name='delete_employee_category'),
+    path('get_subject_details/', views.get_subject_details, name='get_subject_details'),
+    # path('update_subject_category_details/', views.update_subject_category_details, name='update_subject_category_details'),
+    # path('delete_subject_category/', views.delete_subject_category, name='delete_subject_category'),
 
 
 

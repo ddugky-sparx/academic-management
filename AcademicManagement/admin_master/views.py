@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import AcademicClass,AcademicDepartment,AcademicDesignation,AcademicQualification,AcademicDivision,AcademicEmployeeCategory
+from .models import AcademicClass,AcademicDepartment,AcademicDesignation,AcademicQualification,AcademicDivision,AcademicEmployeeCategory,AcademicSubject
 from django.conf import settings
 from django.http import JsonResponse
 
@@ -146,6 +146,37 @@ def division_manage(request):
 
     return render(request, 'division_manage.html', context)
 
+
+def subject_manage(request):
+    success_message=None
+    error_message = None
+    academic_classes = AcademicClass.objects.filter(is_enabled=True)
+    academic_subject=AcademicSubject.objects.all()
+    if request.method == 'POST':
+        subject_name = request.POST.get('subject_name')
+        class_ids = request.POST.getlist('classes')
+        if not subject_name:
+            error_message = 'Division name cannot be empty.'
+        elif not class_ids:
+            error_message = 'Select Class'
+        else:
+            if AcademicSubject.objects.filter(subject_name=subject_name).exists():
+                error_message = 'Subject name already exists.'
+            else:
+                subject = AcademicSubject.objects.create(subject_name=subject_name)
+                subject.classes.set(class_ids)
+                subject.save()
+                success_message = 'Subject created successfully.'
+        
+
+
+    context={
+        'errormessage': error_message,
+        'successmessage': success_message,
+        "academic_classes":academic_classes,
+        "academic_subject":academic_subject
+    }
+    return render(request,"subject_manage.html",context)
 
 def employee_category_manage(request):
     success_message=None
@@ -464,3 +495,17 @@ def delete_employee_category(request):
     q.delete()
     return JsonResponse({"message":"deleted sucess fully"})
 
+
+
+def get_subject_details(request):
+    subject_id = request.GET['subject_id']
+    subject_obj=AcademicSubject.objects.get(id=subject_id)
+    classes = list(subject_obj.classes.values('id', 'class_name'))
+    print(subject_obj.classes)
+    response_data = {
+    'id': subject_obj.id,
+    'name': subject_obj.subject_name,
+    "classes":classes,
+    'select': 1 if subject_obj.is_active else 0,
+    }
+    return JsonResponse(response_data)

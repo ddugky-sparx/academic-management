@@ -1,27 +1,29 @@
 {% extends 'admin_base.html' %}
 {% block content %}
 <ul class="breadcrumb">
-    <li><a href="#">Home</a></li>     
-    <li class="active">Master</li>               
-    <li class="active">Departments</li>
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Master</a></li>
+    <li class="active">Subjects</li>
 </ul>
-<!-- END BREADCRUMB -->                       
-<div class="page-title">                    
-    <h2><span class="fa fa-arrow-circle-o-left"></span> Manage Departments</h2>
-</div>                   
+<!-- END BREADCRUMB -->
 
+<!-- PAGE TITLE -->
+<div class="page-title">                    
+    <h2><span class="fa fa-arrow-circle-o-left"></span>Manage Subjects</h2>
+</div>
+<!-- END PAGE TITLE -->                
 
 <!-- PAGE CONTENT WRAPPER -->
-<div class="page-content-wrap">
+<div class="page-content-wrap">                
 
     <div class="row">
-        <div class="col-md-12">
-            
-        <form class="form-horizontal" method="post" enctype="multipart/form-data">
+
+        <div class="col-md-6">
+            <form class="form-horizontal" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><strong>New </strong> Departments</h3>
+                    <h3 class="panel-title"><strong>New </strong> Subjects</h3>
                     <ul class="panel-controls">
                         <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
                     </ul>
@@ -30,33 +32,75 @@
                     
                     <div class="row">
                         
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             
                             <div class="form-group">
-                                <div class="col-md-11 col-xs-12">                                                                                                                                                        
-                                    <input type="text" required autofocus name='department_name' class="form-control" placeholder="Department Name"/>                                                    
+                                <div class="col-md-12 col-xs-12">                                                                                                                                                        
+                                    <input type="text" required autofocus name='subject_name' class="form-control" placeholder="Subject Name"/>                                                    
                                 </div>
                             </div>
                             
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <div class="col-md-11 col-xs-12">                                            
-                                    <input type="text" required name="department_code" class="form-control" placeholder="Department Code"/>
-                                </div>
-                            </div>
                             
                         </div>
+                        
                         
                     </div>
 
                 </div>
+                <div class="panel-heading">
+                    <h3 class="panel-title"><strong>Class </strong></h3>
+                    <ul class="panel-controls">
+                        <li><div class="checkbox">
+                            <input type="checkbox" 
+                            class="classCheckbox"
+                            {% comment %} class="icheckbox" {% endcomment %}
+                             id="selectAllCheckbox" onclick="checkAll()" />
+                            
+                        </div></li>
+                    </ul>
+                </div>
+                
+                <div class="panel-body">                                                                        
+                    
+                    <div class="row">
+                        
+                        <div class="col-md-12">
+                            {% for class in academic_classes %}
+                            <div class="checkbox">
+                                <input type="checkbox" name="classes" class="classCheckbox" value="{{class.id}}"/>
+                                <label style="font-weight: bold;">Class {{class.class_name}}</label>
+                            </div>
+                        {% endfor %}
+                        
+                            
+                            
+                            
+                            {% comment %} <div class="form-group">
+                                <div class="col-md-12 col-xs-12">                                                                                                                                                        
+                                    <input type="text" required autofocus name='department_name' class="form-control" placeholder="Subject Name"/>                                                    
+                                </div>
+                            </div>
+                             {% endcomment %}
+                            
+                        </div>
+                        
+                        
+                    </div>
+
+                </div>
+
                 <div class="panel-footer">
                     <input type="reset" value="Clear Form" class="btn btn-default">                                 
                     <button class="btn btn-primary pull-right">Submit</button>
                 </div>
             </div>
         </form>
+
+
+        </div>
+
+        <div class="col-md-6">
+
             <div class="panel panel-default">
                 <div class="panel-heading">                                
                     <h3 class="panel-title">Default</h3>
@@ -71,32 +115,30 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Departments Name</th>
-                                <th>Code</th>
+                                <th>Subjects Name</th>
                                 <th>Status</th>
                                 <th>Action</th>
 
                             </tr>
                         </thead>
                         <tbody> 
-                            {% for department in academic_department %}
-                            <tr id="{{department.id}}">
+                            {% for Subject in academic_subject %}
+                            <tr >
                                 <td>{{ forloop.counter }}</td>
-                                <td>{{ department.department_name }}</td>
-                                <td>{{ department.department_code }}</td>
+                                <td>{{ Subject.subject_name }}</td>
                                 <td>
-                                    {% if department.is_active %}
+                                    {% if Subject.is_active %}
                                     <span class="label label-success label-form">Active</span>
                                     {% else %}
                                     <span class="label label-danger label-form">Deactive</span>
                                     {% endif %}
                                 </td>
                                 <td>
-                                    <button class="btn btn-info" onclick="edit_pop_department({{department.id}})">
-                                        <span id ="spinner{{department.id}}" class="fa fa-pencil"></span>
+                                    <button class="btn btn-info" onclick="edit_pop_subject({{Subject.id}})">
+                                        <span id ="spinner{{Subject.id}}" class="fa fa-pencil"></span>
                                     </button>
-                                    {% if not department.is_active %}
-                                    <a onclick="delete_department({{department.id}})">
+                                    {% if not Subject.is_active %}
+                                    <a onclick="delete_department({{Subject.id}})">
                                         <button class="btn btn-danger">
                                             <span class="glyphicon glyphicon-trash"></span>
                                         </button>
@@ -109,15 +151,17 @@
                     </table>
                 </div>
             </div>
-            <input type="hidden" value="{{ request.scheme }}://{{ request.get_host }}/get_departments_details/" name="" id="url">
-            
+            <input type="hidden" value="{{ request.scheme }}://{{ request.get_host }}/get_subject_details/" name="" id="url">
+
         </div>
-        
+
     </div>
 
-</div>
 
+    
+</div>
 {% endblock %}
+
 {% block message %}
 
 <div class="message-box animated fadeIn" data-sound="alert" id="mb-remove-row">
@@ -130,7 +174,7 @@
             </div>
             <div class="mb-footer">
                 <div class="pull-right">
-                    <input type="hidden" value="{{ request.scheme }}://{{ request.get_host }}/delete_department/" name="" id="deleteurl">
+                    <input type="hidden" value="{{ request.scheme }}://{{ request.get_host }}/delete_qualification/" name="" id="deleteurl">
                     <button class="btn btn-success btn-lg mb-control-yes">Yes</button>
                     <button class="btn btn-default btn-lg mb-control-close">No</button>
                 </div>
@@ -148,46 +192,38 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-          <h4 class="modal-title" id="myModalLabel">Edit Department</h4>
+          <h4 class="modal-title" id="myModalLabel">Edit Qualification</h4>
         </div>
         <div class="modal-body">
             <div class="row custom-margin-bottom">
                 <div class="col-md-6">
                     <div class="form-group">
                         <div class="col-md-12 col-xs-12">
-
-                            <input type="text" required class="form-control" id="edit_name" placeholder="Department Name"/>
-                            <input type="hidden" id="edit_id"/>
+                            <input type="hidden"  id="edit_id"/>
+                            <input type="text" id="edit_name" autofocus class="form-control"  placeholder="Qualification Name"/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <div class="col-md-12 col-xs-12">
-                            <input type="text" class="form-control" required id="edit_code" placeholder="Department Code"/>
+                        <div class="col-md-12 col-xs-12">                                                                                            
+                            <select class="form-control " id="edit_select">
+                                <option value="1">Active</option>
+                                <option value="0">Deactive</option>
+                                
+                            </select>
                         </div>
                     </div>
                 </div>
             </div>
         
-            <div class="row">
-                <div class="col-md-12">
-                <div class="form-group">
-                    <div class="col-md-12 col-xs-12">                                                                                            
-                        <select required class="form-control" id="edit_select">
-                            <option value="1">Active</option>
-                            <option value="0">Deactive</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            </div>
+            
         </div>
         
         <div class="modal-footer">
             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary pull-right" onclick="edit_department()">Update</button>
-            <input type="hidden" value="{{ request.scheme }}://{{ request.get_host }}/update_departments_details/" name="" id="updateurl">
+            <button type="button" class="btn btn-primary pull-right" onclick="edit_qualification()">Update</button>
+            <input type="hidden" value="{{ request.scheme }}://{{ request.get_host }}/update_qualification_details/" name="" id="contacturl">
         </div>
         
         
@@ -196,3 +232,11 @@
   </div><!-- /.modal -->
   
 {% endblock %}
+
+
+
+
+
+
+
+

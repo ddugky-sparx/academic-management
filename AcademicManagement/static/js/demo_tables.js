@@ -629,3 +629,41 @@ function delete_designation(id) {
                 },
             });
         }
+
+
+
+//Subject
+function checkAll() {
+    var selectAllCheckbox = document.getElementById("selectAllCheckbox");
+    var classCheckboxes = document.querySelectorAll('.classCheckbox');
+    
+ classCheckboxes.forEach(function (checkbox) {
+
+    checkbox.checked = selectAllCheckbox.checked;
+});
+}
+
+function edit_pop_subject(subjectId){
+    document.getElementById('spinner'+subjectId).className="fa fa-spinner";
+    reqest_url=document.getElementById('url').value
+    $.ajax({
+        type:"get",
+        url:reqest_url,
+        data: { 'subject_id': subjectId },
+        dataType: 'json',
+        success: function (data) {
+            document.getElementById('edit_name').value=data.name;
+            document.getElementById('edit_id').value=data.id;
+            
+            document.getElementById('edit_select').value=data.select;
+            
+            $('#modal-default').modal('show');
+            document.getElementById('spinner'+subjectId).className="fa fa-pencil";
+
+            
+        },
+        error: function (data) {
+            console.log(data, "error");
+        },
+    });
+}

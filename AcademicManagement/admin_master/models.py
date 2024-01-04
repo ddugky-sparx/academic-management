@@ -41,3 +41,10 @@ class AcademicEmployeeCategory(models.Model):
     employee_category_name = models.CharField(max_length=255)
     employee_category_area = models.IntegerField(choices=EMPLOYEE_CATEGORY_CHOICES)
     is_active = models.BooleanField(default=True)
+
+
+class AcademicSubject(models.Model):
+    subject_name = models.CharField(max_length=150)
+    classes = models.ManyToManyField('AcademicClass')
+    is_active = models.BooleanField(default=True)
+
