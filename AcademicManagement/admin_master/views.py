@@ -539,3 +539,17 @@ def update_subject_details(request):
         'successmessage': success_message,
     }
     return JsonResponse(response_data)
+
+
+def get_subject_view(request):
+    subject_id = request.GET['subject_id']
+    subject_obj=AcademicSubject.objects.get(id=subject_id)
+    classes = list(subject_obj.classes.values('id', 'class_name'))
+    print(subject_obj.classes)
+    response_data = {
+    'id': subject_obj.id,
+    'name': subject_obj.subject_name,
+    "classes":classes,
+    'select': "Active" if subject_obj.is_active else "Deactive",
+    }
+    return JsonResponse(response_data)

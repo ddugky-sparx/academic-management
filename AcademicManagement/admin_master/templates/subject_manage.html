@@ -138,12 +138,16 @@
                                         <span id ="spinner{{Subject.id}}" class="fa fa-pencil"></span>
                                     </button>
                                     {% if not Subject.is_active %}
-                                    <a onclick="delete_department({{Subject.id}})">
-                                        <button class="btn btn-danger">
+                                    
+                                        <button class="btn btn-danger" onclick="delete_department({{Subject.id}})">
                                             <span class="glyphicon glyphicon-trash"></span>
                                         </button>
-                                    </a>
+                                    
                                     {% endif %}
+                                    <button class="btn btn-primary" onclick="edit_view_subject({{Subject.id}})">
+                                        
+                                        <span class="glyphicon glyphicon-eye-open"></span>
+                                    </button>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -152,6 +156,7 @@
                 </div>
             </div>
             <input type="hidden" value="{{ request.scheme }}://{{ request.get_host }}/get_subject_details/" name="" id="url">
+            <input type="hidden" value="{{ request.scheme }}://{{ request.get_host }}/get_subject_view/" name="" id="viewurl">
 
         </div>
 
@@ -192,7 +197,7 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-          <h4 class="modal-title" id="myModalLabel">Edit Qualification</h4>
+          <h4 class="modal-title" id="myModalLabel">Edit Subject</h4>
         </div>
         <div class="modal-body">
             <div class="row custom-margin-bottom">
@@ -200,7 +205,7 @@
                     <div class="form-group">
                         <div class="col-md-12 col-xs-12">
                             <input type="hidden" id="edit_id" />
-                            <input type="text" id="edit_name" autofocus class="form-control" placeholder="Qualification Name" />
+                            <input type="text" id="edit_name" autofocus class="form-control" placeholder="Subject Name" />
                         </div>
                     </div>
                 </div>
@@ -243,9 +248,64 @@
         
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
+</div><!-- /.modal -->
   
-{% endblock %}
+<div class="modal fade" id="modal-default1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="myModalLabel">View Subject</h4>
+        </div>
+        <div class="modal-body">
+            <!-- Language Section -->
+            <div class="row">
+                <div class="col-xs-3">
+                    <label>Subject:</label>
+                </div>
+                <div class="col-xs-9">
+                    <span id="viewsubject"></span>
+                </div>
+            </div>
+        
+            <!-- Status Section -->
+            <div class="row">
+                <div class="col-xs-3">
+                    <label>Status:</label>
+                </div>
+                <div class="col-xs-9">
+                    <span id="viewselect">Active</span>
+                </div>
+            </div>
+        
+            <!-- Classes Section -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <h6><span><u>Class</u></span></h6>
+                    <span id="classes">English</span>
+                    <!-- Add more classes as needed -->
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        
+        
+        
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+           
+        </div>
+        
+        
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+  {% endblock %}
 
 
 

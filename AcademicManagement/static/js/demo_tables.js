@@ -724,3 +724,29 @@ function edit_subject(){
     });
 
 } 
+
+function edit_view_subject(subjectId){
+    // document.getElementById('spinner'+subjectId).className="fa fa-spinner";
+    reqest_url=document.getElementById('viewurl').value
+    $.ajax({
+        type:"get",
+        url:reqest_url,
+        data: { 'subject_id': subjectId },
+        dataType: 'json',
+        success: function (data) {
+            console.log(data);
+            document.getElementById('viewsubject').innerHTML=data.name;
+            document.getElementById('viewselect').innerHTML=data.select;
+            data.classes.forEach(function (classObj) {
+                document.getElementById('edit_class_' + classObj.id).checked = true;
+            });
+            
+            $('#modal-default1').modal('show');
+
+            
+        },
+        error: function (data) {
+            console.log(data, "error");
+        },
+    });
+}

@@ -29,6 +29,7 @@ urlpatterns = [
     path('delete_employee_category/', views.delete_employee_category, name='delete_employee_category'),
     path('get_subject_details/', views.get_subject_details, name='get_subject_details'),
     path('update_subject_details/', views.update_subject_details, name='update_subject_details'),
+    path('get_subject_view/', views.get_subject_view, name='get_subject_view'),
     # path('delete_subject_category/', views.delete_subject_category, name='delete_subject_category'),
 
 
