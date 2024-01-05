@@ -199,31 +199,45 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <div class="col-md-12 col-xs-12">
-                            <input type="hidden"  id="edit_id"/>
-                            <input type="text" id="edit_name" autofocus class="form-control"  placeholder="Qualification Name"/>
+                            <input type="hidden" id="edit_id" />
+                            <input type="text" id="edit_name" autofocus class="form-control" placeholder="Qualification Name" />
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <div class="col-md-12 col-xs-12">                                                                                            
-                            <select class="form-control " id="edit_select">
+                        <div class="col-md-12 col-xs-12">
+                            <select class="form-control" id="edit_select">
                                 <option value="1">Active</option>
                                 <option value="0">Deactive</option>
-                                
                             </select>
                         </div>
                     </div>
                 </div>
             </div>
-        
-            
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            {% for class in academic_classes %}
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="edit_class_{{class.id}}" name="classes" class="classCheckbox" value="{{class.id}}" />
+                                    Class {{class.class_name}}
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        
         
         <div class="modal-footer">
             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary pull-right" onclick="edit_qualification()">Update</button>
-            <input type="hidden" value="{{ request.scheme }}://{{ request.get_host }}/update_qualification_details/" name="" id="contacturl">
+            <button type="button" class="btn btn-primary pull-right" onclick="edit_subject()">Update</button>
+            <input type="hidden" value="{{ request.scheme }}://{{ request.get_host }}/update_subject_details/" name="" id="contacturl">
         </div>
         
         

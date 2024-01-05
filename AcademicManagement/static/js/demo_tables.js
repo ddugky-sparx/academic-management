@@ -656,6 +656,9 @@ function edit_pop_subject(subjectId){
             document.getElementById('edit_id').value=data.id;
             
             document.getElementById('edit_select').value=data.select;
+            data.classes.forEach(function (classObj) {
+                document.getElementById('edit_class_' + classObj.id).checked = true;
+            });
             
             $('#modal-default').modal('show');
             document.getElementById('spinner'+subjectId).className="fa fa-pencil";
@@ -667,3 +670,57 @@ function edit_pop_subject(subjectId){
         },
     });
 }
+
+function edit_subject(){
+    reqest_url =document.getElementById('contacturl').value
+   
+
+    updateId=document.getElementById('edit_id').value;
+    updateName=document.getElementById('edit_name').value;
+    var selectedClassIds = [];
+    $('input[name="classes"]:checked').each(function () {
+        selectedClassIds.push($(this).val());
+    });
+
+    updateStatus=document.getElementById('edit_select').value
+    var classIdsString = selectedClassIds.join(',');
+ 
+    updateObject = {
+        "updateId": updateId,
+        "updateName": updateName,
+        "updateStatus": updateStatus,
+        "selectedClassIds":classIdsString
+      };
+      console.log(updateObject);
+    
+    $.ajax({
+        type:"get",
+        url:reqest_url,
+        data:updateObject,
+        dataType: 'json',
+        success: function (data) {
+            $('#modal-default').modal('hide');
+            if(data.errormessage){
+                noty({ text: data.errormessage, layout: 'topRight', timeout: 1000, type: 'error' }).show();
+            setTimeout(function () {
+               
+            }, 3000);
+            }
+            if(data.successmessage){
+                noty({ text: data.successmessage, layout: 'topRight', timeout: 1000, type: 'success' }).show();
+            setTimeout(function () {
+                location.reload();
+            }, 3000);
+
+            }
+            
+                
+
+            
+        },
+        error: function (data) {
+            console.log(data, "error");
+        },
+    });
+
+} 

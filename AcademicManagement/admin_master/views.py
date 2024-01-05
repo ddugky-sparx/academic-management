@@ -509,3 +509,33 @@ def get_subject_details(request):
     'select': 1 if subject_obj.is_active else 0,
     }
     return JsonResponse(response_data)
+
+def update_subject_details(request):
+    update_id = request.GET['updateId'].strip()
+    update_name = request.GET['updateName'].strip()
+    update_Status = request.GET['updateStatus'].strip()
+    class_ids = request.GET.get('selectedClassIds').split(',')
+    print(class_ids)
+    error_message = None
+    success_message = None
+
+    if not update_name or not class_ids:
+        error_message = 'Both Subject and Class are required.'
+    elif AcademicSubject.objects.exclude(id=update_id).filter(subject_name__iexact=update_name).exists():
+        error_message = 'Subject Name already exists.'
+    else:
+        if not any(class_ids):
+            error_message = 'At least one class must be selected.'
+        else:
+            obj = AcademicSubject.objects.get(id=update_id)
+            obj.subject_name = update_name
+            obj.is_active = int(update_Status)  
+            obj.classes.set(class_ids)
+            obj.save()
+            success_message = 'Employee updated successfully.'
+
+    response_data = {
+        'errormessage': error_message,
+        'successmessage': success_message,
+    }
+    return JsonResponse(response_data)
