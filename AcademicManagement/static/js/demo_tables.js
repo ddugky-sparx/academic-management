@@ -656,9 +656,34 @@ function edit_pop_subject(subjectId){
             document.getElementById('edit_id').value=data.id;
             
             document.getElementById('edit_select').value=data.select;
-            data.classes.forEach(function (classObj) {
-                document.getElementById('edit_class_' + classObj.id).checked = true;
+
+            var container = document.getElementById('checkboxContainer');
+            container.innerHTML = '';
+            
+
+            function createCheckbox(id, name, isChecked) {
+                return `
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="${id}" name="classes" value="${id}" class="classCheckbox" ${isChecked ? 'checked' : ''} />
+                            Class ${name}
+                        </label>
+                    </div>
+                `;
+            }
+
+            data.classes.forEach(function(item) {
+                container.innerHTML += createCheckbox(item.id, item.class_name, true);
             });
+
+            data.other_classes.forEach(function(item) {
+                container.innerHTML += createCheckbox(item.id, item.class_name, false);
+            });
+            
+            
+            // data.classes.forEach(function (classObj) {
+            //     document.getElementById('edit_class_' + classObj.id).checked = true;
+            // });
             
             $('#modal-default').modal('show');
             document.getElementById('spinner'+subjectId).className="fa fa-pencil";
@@ -684,7 +709,7 @@ function edit_subject(){
 
     updateStatus=document.getElementById('edit_select').value
     var classIdsString = selectedClassIds.join(',');
- 
+    console.log(selectedClassIds);
     updateObject = {
         "updateId": updateId,
         "updateName": updateName,
@@ -728,6 +753,7 @@ function edit_subject(){
 function edit_view_subject(subjectId){
     // document.getElementById('spinner'+subjectId).className="fa fa-spinner";
     reqest_url=document.getElementById('viewurl').value
+    console.log(reqest_url);
     $.ajax({
         type:"get",
         url:reqest_url,
@@ -737,9 +763,21 @@ function edit_view_subject(subjectId){
             console.log(data);
             document.getElementById('viewsubject').innerHTML=data.name;
             document.getElementById('viewselect').innerHTML=data.select;
-            data.classes.forEach(function (classObj) {
-                document.getElementById('edit_class_' + classObj.id).checked = true;
+            var container = document.getElementById('licontiner');
+            container.innerHTML = '';
+            
+
+            function createCheckbox(id, name, isChecked) {
+                return `
+                    <li> <span id="classes">class ${name}</span></li>`;
+            }
+
+            data.classes.forEach(function(item) {
+                container.innerHTML += createCheckbox(item.id, item.class_name, true);
             });
+
+          
+           
             
             $('#modal-default1').modal('show');
 

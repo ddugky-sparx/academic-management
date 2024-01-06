@@ -223,15 +223,15 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <div class="col-md-12">
-                            {% for class in academic_classes %}
+                        <div class="col-md-12" id="checkboxContainer">
+                            {% comment %} {% for class in academic_classes %}
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox" id="edit_class_{{class.id}}" name="classes" class="classCheckbox" value="{{class.id}}" />
                                     Class {{class.class_name}}
                                 </label>
                             </div>
-                            {% endfor %}
+                            {% endfor %} {% endcomment %}
                         </div>
                     </div>
                 </div>
@@ -283,8 +283,10 @@
             <!-- Classes Section -->
             <div class="row">
                 <div class="col-xs-12">
-                    <h6><span><u>Class</u></span></h6>
-                    <span id="classes">English</span>
+                    <h6><span><u>Classes</u></span></h6>
+                    <ul id="licontiner">
+                        <li> <span id="classes">English</span></li>
+                    </ul>
                     <!-- Add more classes as needed -->
                 </div>
             </div>

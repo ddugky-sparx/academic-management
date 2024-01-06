@@ -501,11 +501,14 @@ def get_subject_details(request):
     subject_id = request.GET['subject_id']
     subject_obj=AcademicSubject.objects.get(id=subject_id)
     classes = list(subject_obj.classes.values('id', 'class_name'))
-    print(subject_obj.classes)
+    other_classes_queryset = AcademicClass.objects.filter(is_enabled=True).exclude(id__in=subject_obj.classes.values_list('id', flat=True))
+    other_classes = list(other_classes_queryset.values('id', 'class_name'))
+
     response_data = {
     'id': subject_obj.id,
     'name': subject_obj.subject_name,
     "classes":classes,
+    "other_classes":other_classes,
     'select': 1 if subject_obj.is_active else 0,
     }
     return JsonResponse(response_data)
