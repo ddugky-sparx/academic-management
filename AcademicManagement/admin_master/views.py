@@ -556,3 +556,11 @@ def get_subject_view(request):
     'select': "Active" if subject_obj.is_active else "Deactive",
     }
     return JsonResponse(response_data)
+
+
+
+def delete_subject(request):
+    delete_id = request.GET['id'].strip()
+    q = AcademicSubject.objects.get(id=delete_id)
+    q.delete()
+    return JsonResponse({"message":"deleted sucess fully"})

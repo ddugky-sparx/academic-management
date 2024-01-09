@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap5',
     'admin_general',
-    'admin_master'
+    'admin_master',
+    'admin_employee'
 
 ]
 

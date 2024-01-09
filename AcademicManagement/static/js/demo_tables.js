@@ -788,3 +788,43 @@ function edit_view_subject(subjectId){
         },
     });
 }
+
+
+function delete_subject(id) {
+    var box = $("#mb-remove-row");
+    box.addClass("open");
+
+
+    var request_url = document.getElementById('deleteurl').value;
+    $.ajax({
+            type: "get",
+            url: request_url,
+            data: { "id": id },
+            dataType: 'json',
+            success: function (data) {
+                box.find(".mb-control-yes").off("click").on("click", function () {
+                    box.removeClass("open");
+                    $("#"+id).hide("slow",function(){
+                        $(this).remove();
+                    });
+                });
+
+            },
+            error: function (data) {
+                console.log(data, "error");
+            },
+        });
+
+
+    }
+
+
+    function showAdditionalFields() {
+        var employeeType = document.getElementById("Employee_Category").value;
+        var teacherFields = document.getElementById("teacher-fields");
+        if (employeeType === "2") {
+            teacherFields.style.display = "block";
+        } else {
+            teacherFields.style.display = "none";
+        }
+    }
