@@ -88,7 +88,7 @@
                         <label for="Employee_Category Category">Employee Category</label>
                         <select id="Employee_Category" name="EmployeeCategory" class="form-control" onchange="showAdditionalFields()">
                           {% for i in employee_data  %}
-                          <option value="{{i.employee_category_area}}">{{i.employee_category_name}}</option>
+                          <option value='{ "id": {{ i.id }}, "area": "{{ i.employee_category_area }}" }'>{{i.employee_category_name}}</option>
                           {% endfor %}
                         </select>
                       </div>
@@ -99,11 +99,12 @@
                       <div class="row" id="teacher-fields" style="display: none;">
                         <div class="col-sm-6 form-group">
                             <label for="class">Class</label>
-                            <select id="class" name="class" class="form-control">
+                            <select id="class" name="class" class="form-control" onchange="updateSubjects()">
                                 {% for i in class_data  %}
                                 <option value="{{i.id}}">{{i.class_name}}</option>
                                 {% endfor %}
                             </select>
+                            <input type="hidden" value="{{ request.scheme }}://{{ request.get_host }}/get_register_subjects/" name="" id="updatesubject">
                         </div>
                     
                         <div class="col-sm-6 form-group">
@@ -117,7 +118,7 @@
                     
                         <div class="col-sm-6 form-group">
                             <label for="subject">Subject</label>
-                            <select id="division" name="division" class="form-control">
+                            <select id="subject" name="subject" class="form-control">
                                 {% for i in subject_data  %}
                                 <option value="{{i.id}}">{{i.subject_name}}</option>
                                 {% endfor %}
@@ -125,9 +126,9 @@
                         
                         </div>
                         <div class="col-sm-6 form-group">
-                            <input type="button" class=" btn btn-primary" value="ADD">
+                            <input type="button" class=" btn btn-primary" value="ADD" onclick="addtoTable()">
                           </div>
-                          <table class="table datatable">
+                          <table class="table datatable" id="classTable">
                             <thead>
                                 <tr>
                                     <th>#</th>

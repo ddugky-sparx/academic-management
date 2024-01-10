@@ -187,23 +187,26 @@ function delete_department(id) {
 
     var request_url = document.getElementById('deleteurl').value;
 
-    $.ajax({
-            type: "get",
-            url: request_url,
-            data: { "id": id },
-            dataType: 'json',
-            success: function (data) {
-                box.find(".mb-control-yes").off("click").on("click", function () {
-                    box.removeClass("open");
-                    $("#"+id).hide("slow",function(){
-                        $(this).remove();
-                    });
-                });
+    
 
-            },
-            error: function (data) {
-                console.log(data, "error");
-            },
+        box.find(".mb-control-yes").off("click").on("click", function () {
+            $.ajax({
+                type: "get",
+                url: request_url,
+                data: { "id": id },
+                dataType: 'json',
+                success: function (data) {
+                    
+    
+                },
+                error: function (data) {
+                    console.log(data, "error");
+                },
+            });
+            box.removeClass("open");
+            $("#"+id).hide("slow",function(){
+                $(this).remove();
+            });
         });
 
 
@@ -294,23 +297,25 @@ function delete_designation(id) {
 
     var request_url = document.getElementById('deleteurl').value;
 
-    $.ajax({
-            type: "get",
-            url: request_url,
-            data: { "id": id },
-            dataType: 'json',
-            success: function (data) {
-                box.find(".mb-control-yes").off("click").on("click", function () {
-                    box.removeClass("open");
-                    $("#"+id).hide("slow",function(){
-                        $(this).remove();
-                    });
-                });
-
-            },
-            error: function (data) {
-                console.log(data, "error");
-            },
+    
+        box.find(".mb-control-yes").off("click").on("click", function () {
+            $.ajax({
+                type: "get",
+                url: request_url,
+                data: { "id": id },
+                dataType: 'json',
+                success: function (data) {
+                    
+    
+                },
+                error: function (data) {
+                    console.log(data, "error");
+                },
+            });
+            box.removeClass("open");
+            $("#"+id).hide("slow",function(){
+                $(this).remove();
+            });
         });
 
 
@@ -324,22 +329,24 @@ function delete_designation(id) {
         box.addClass("open");
         var request_url = document.getElementById('deleteurl').value;
     
-            $.ajax({
-                type: "get",
-                url: request_url,
-                data: { "id": id },
-                dataType: 'json',
-                success: function (data) {
-                    box.find(".mb-control-yes").off("click").on("click", function () {
-                        box.removeClass("open");
-                        $("#"+id).hide("slow",function(){
-                            $(this).remove();
-                        });
-                    });
-                },
-                error: function (data) {
-                    console.log(data, "error");
-                },
+            
+            box.find(".mb-control-yes").off("click").on("click", function () {
+                $.ajax({
+                    type: "get",
+                    url: request_url,
+                    data: { "id": id },
+                    dataType: 'json',
+                    success: function (data) {
+                       
+                    },
+                    error: function (data) {
+                        console.log(data, "error");
+                    },
+                });
+                box.removeClass("open");
+                $("#"+id).hide("slow",function(){
+                    $(this).remove();
+                });
             });
         
     
@@ -427,22 +434,24 @@ function delete_designation(id) {
             box.addClass("open");
             var request_url = document.getElementById('deleteurl').value;
         
-                $.ajax({
-                    type: "get",
-                    url: request_url,
-                    data: { "id": id },
-                    dataType: 'json',
-                    success: function (data) {
-                        box.find(".mb-control-yes").off("click").on("click", function () {
-                            box.removeClass("open");
-                            $("#"+id).hide("slow",function(){
-                                $(this).remove();
-                            });
-                        });
-                    },
-                    error: function (data) {
-                        console.log(data, "error");
-                    },
+               
+                box.find(".mb-control-yes").off("click").on("click", function () {
+                    $.ajax({
+                        type: "get",
+                        url: request_url,
+                        data: { "id": id },
+                        dataType: 'json',
+                        success: function (data) {
+                           
+                        },
+                        error: function (data) {
+                            console.log(data, "error");
+                        },
+                    });
+                    box.removeClass("open");
+                    $("#"+id).hide("slow",function(){
+                        $(this).remove();
+                    });
                 });
             
         
@@ -532,22 +541,24 @@ function delete_designation(id) {
             box.addClass("open");
             var request_url = document.getElementById('deleteurl').value;
         
-                $.ajax({
-                    type: "get",
-                    url: request_url,
-                    data: { "id": id },
-                    dataType: 'json',
-                    success: function (data) {
-                        box.find(".mb-control-yes").off("click").on("click", function () {
-                            box.removeClass("open");
-                            $("#"+id).hide("slow",function(){
-                                $(this).remove();
-                            });
-                        });
-                    },
-                    error: function (data) {
-                        console.log(data, "error");
-                    },
+               
+                box.find(".mb-control-yes").off("click").on("click", function () {
+                    $.ajax({
+                        type: "get",
+                        url: request_url,
+                        data: { "id": id },
+                        dataType: 'json',
+                        success: function (data) {
+                            
+                        },
+                        error: function (data) {
+                            console.log(data, "error");
+                        },
+                    });
+                    box.removeClass("open");
+                    $("#"+id).hide("slow",function(){
+                        $(this).remove();
+                    });
                 });
             
         
@@ -796,23 +807,25 @@ function delete_subject(id) {
 
 
     var request_url = document.getElementById('deleteurl').value;
-    $.ajax({
-            type: "get",
-            url: request_url,
-            data: { "id": id },
-            dataType: 'json',
-            success: function (data) {
-                box.find(".mb-control-yes").off("click").on("click", function () {
-                    box.removeClass("open");
-                    $("#"+id).hide("slow",function(){
-                        $(this).remove();
-                    });
-                });
-
-            },
-            error: function (data) {
-                console.log(data, "error");
-            },
+   
+        box.find(".mb-control-yes").off("click").on("click", function () {
+            $.ajax({
+                type: "get",
+                url: request_url,
+                data: { "id": id },
+                dataType: 'json',
+                success: function (data) {
+                    
+    
+                },
+                error: function (data) {
+                    console.log(data, "error");
+                },
+            });
+            box.removeClass("open");
+            $("#"+id).hide("slow",function(){
+                $(this).remove();
+            });
         });
 
 
@@ -821,10 +834,67 @@ function delete_subject(id) {
 
     function showAdditionalFields() {
         var employeeType = document.getElementById("Employee_Category").value;
+        var selectedValue = JSON.parse(employeeType);
         var teacherFields = document.getElementById("teacher-fields");
-        if (employeeType === "2") {
+        if (selectedValue.area === "2") {
             teacherFields.style.display = "block";
         } else {
             teacherFields.style.display = "none";
         }
+    }
+
+    function addtoTable() {
+        var classId = document.getElementById("class").value;
+        var className = document.getElementById("class").options[document.getElementById("class").selectedIndex].text;
+        var divisionId = document.getElementById("division").value;
+        var divisionName = document.getElementById("division").options[document.getElementById("division").selectedIndex].text;
+        var subjectId = document.getElementById("subject").value;
+        var subjectName = document.getElementById("subject").options[document.getElementById("subject").selectedIndex].text;
+
+        var table = document.getElementById("classTable").getElementsByTagName('tbody')[0];
+        var newRow = table.insertRow(table.rows.length);
+        var cell1 = newRow.insertCell(0);
+        var cell2 = newRow.insertCell(1);
+        var cell3 = newRow.insertCell(2);
+        var cell4 = newRow.insertCell(3);
+        var cell5 = newRow.insertCell(4);
+
+        cell1.innerHTML = table.rows.length;
+        cell2.innerHTML = className;
+        cell3.innerHTML = divisionName;
+        cell4.innerHTML = subjectName;
+        cell5.innerHTML = '<button class="btn btn-danger" onclick="deleteRow(this)"><span class="glyphicon glyphicon-trash"></span></button>';
+    }
+
+    function deleteRow(btn) {
+        var row = btn.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+    }
+
+
+    function updateSubjects() {
+        var classId = document.getElementById("class").value;
+        var subjectDropdown = document.getElementById("subject");
+        console.log(classId);
+        var request_url = document.getElementById('updatesubject').value;
+        subjectDropdown.innerHTML = '';
+
+        // Fetch subjects based on the selected class using AJAX
+        $.ajax({
+            url: request_url,
+            type: 'GET',
+            data: { "classId": classId },
+            dataType: 'json',
+            success: function (data) {
+                data.subjects.forEach(function (item) {
+                    var option = document.createElement("option");
+                    option.value = item.id;
+                    option.text = item.subject_name;
+                    subjectDropdown.add(option);
+                });
+            },
+            error: function (error) {
+                console.log('Error fetching subjects:', error);
+            }
+        });
     }
