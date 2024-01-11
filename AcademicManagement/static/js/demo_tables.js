@@ -850,21 +850,55 @@ function delete_subject(id) {
         var divisionName = document.getElementById("division").options[document.getElementById("division").selectedIndex].text;
         var subjectId = document.getElementById("subject").value;
         var subjectName = document.getElementById("subject").options[document.getElementById("subject").selectedIndex].text;
-
+    
         var table = document.getElementById("classTable").getElementsByTagName('tbody')[0];
+        for (var i = 0, row; row = table.rows[i]; i++) {
+            if (
+                row.cells[0].innerHTML === className &&
+                row.cells[1].innerHTML === divisionName &&
+                row.cells[2].innerHTML === subjectName
+            ) {
+
+                // alert("This class, division, and subject combination already exists in the table.");
+                noty({ text: 'This combination already exists in the table.', layout: 'topRight',timeout: 2000 ,type:'error' });
+                return;
+            }
+        }
+    
+        // If no similar row found, add the new row
         var newRow = table.insertRow(table.rows.length);
         var cell1 = newRow.insertCell(0);
         var cell2 = newRow.insertCell(1);
         var cell3 = newRow.insertCell(2);
         var cell4 = newRow.insertCell(3);
-        var cell5 = newRow.insertCell(4);
 
-        cell1.innerHTML = table.rows.length;
-        cell2.innerHTML = className;
-        cell3.innerHTML = divisionName;
-        cell4.innerHTML = subjectName;
-        cell5.innerHTML = '<button class="btn btn-danger" onclick="deleteRow(this)"><span class="glyphicon glyphicon-trash"></span></button>';
+        var classIdInput = document.createElement("input");
+        classIdInput.type = "hidden";
+        classIdInput.name = "class_ids[]";  // Use array notation for multiple values
+        classIdInput.value = classId;
+
+        var divisionIdInput = document.createElement("input");
+        divisionIdInput.type = "hidden";
+        divisionIdInput.name = "division_ids[]";
+        divisionIdInput.value = divisionId;
+
+        var subjectIdInput = document.createElement("input");
+        subjectIdInput.type = "hidden";
+        subjectIdInput.name = "subject_ids[]";
+        subjectIdInput.value = subjectId;
+
+
+    
+        cell1.innerHTML = className;
+        cell2.innerHTML = divisionName;
+        cell3.innerHTML = subjectName;
+        cell4.innerHTML =  '<button class="btn btn-danger" onclick="deleteRow(this)"><span class="glyphicon glyphicon-trash"></span></button>';
+
+        newRow.appendChild(classIdInput);
+        newRow.appendChild(divisionIdInput);
+        newRow.appendChild(subjectIdInput);
     }
+    
 
     function deleteRow(btn) {
         var row = btn.parentNode.parentNode;
