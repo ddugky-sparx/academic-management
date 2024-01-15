@@ -55,9 +55,9 @@
                       <div class="col-sm-6 form-group">
                         <label for="sex">Gender</label>
                         <select id="sex" name="gender" class="form-control">
-                          <option value="male">Male</option>
-                          <option value="female">Female</option>
-                          <option value="unspecified">Unspecified</option>
+                          <option value="0">Male</option>
+                          <option value="1">Female</option>
+                          <option value="2">Unspecified</option>
                         </select>
                       </div>
                       <div class="col-sm-6 form-group">
@@ -119,9 +119,7 @@
                         <div class="col-sm-6 form-group">
                             <label for="subject">Subject</label>
                             <select id="subject" name="subject" class="form-control">
-                                {% for i in subject_data  %}
-                                <option value="{{i.id}}">{{i.subject_name}}</option>
-                                {% endfor %}
+                              
                             </select>                        
                         
                         </div>
