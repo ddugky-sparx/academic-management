@@ -932,3 +932,12 @@ function delete_subject(id) {
             }
         });
     }
+// pop up image qr 
+$(document).ready(function () {
+    $('#barcodeModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var barcodeSrc = button.data('barcode-src');
+        var modal = $(this);
+        modal.find('#largeBarcodeImage').attr('src', barcodeSrc);
+    });
+});

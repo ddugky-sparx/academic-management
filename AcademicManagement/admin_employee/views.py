@@ -111,6 +111,13 @@ def employee_register(request):
                 divid_id=division_id,
                 subid_id=subject_id
             )
+        employee_data=adminemp.objects.filter(status=True)
+    
+        context={
+        'employee_data':employee_data,
+            }
+        return render(request,'get_employee_details.html',context)
+        
 
     context={
         'qualification_data':qualification_data,
@@ -134,4 +141,12 @@ def get_register_subjects(request):
 
 
 def get_employee_details(request):
-    return render(request,'get_employee_details.html')
+    employee_data=adminemp.objects.filter(status=True)
+    
+    context={
+        'employee_data':employee_data,
+    }
+    return render(request,'get_employee_details.html',context)
+
+def employee_full_details(request):
+    return render(request,'employee_full_details.html')

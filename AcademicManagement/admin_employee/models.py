@@ -43,7 +43,6 @@ class empdpt(models.Model):
     from_date=models.DateField()
     to_date = models.DateTimeField(null=True, blank=True)
 
-
 class salary(models.Model):
     empid = models.ForeignKey(adminemp, on_delete=models.CASCADE, related_name='salaries')
     salary = models.PositiveIntegerField()
