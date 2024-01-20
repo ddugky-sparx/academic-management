@@ -150,3 +150,29 @@ def get_employee_details(request):
 
 def employee_full_details(request):
     return render(request,'employee_full_details.html')
+
+
+def employee_full_edit(request,emp_id):
+    employee = get_object_or_404(adminemp, id=emp_id)
+    qualification_data = AcademicQualification.objects.all()
+    class_data = AcademicClass.objects.all()
+    division_data = AcademicDivision.objects.all()
+
+    if request.method == 'POST':
+        # Handle form submission and update the employee object
+        employee.fname = request.POST.get('fname')
+        employee.gender = request.POST.get('gender')
+        employee.dob = request.POST.get('dob')
+        employee.Locality = request.POST.get('Locality')
+        # Add more fields as needed
+        employee.save()
+
+    context={
+        'employee': employee,
+        'qualification_data': qualification_data,
+        'class_data': class_data,
+        'division_data': division_data,
+    }  
+
+
+    return render(request, 'employee_full_edit.html',context )

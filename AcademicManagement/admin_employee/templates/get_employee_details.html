@@ -78,9 +78,10 @@
                                     {% endif %}
                                 </td>
                                 <td>
-                                    <button class="btn btn-info" onclick="edit_pop_qualification({{academic_qualification.id}})">
-                                        <span id ="spinner{{academic_qualification.id}}" class="fa fa-pencil"></span>
-                                    </button>
+                                    <a href="{% url 'employee_full_edit' emp_id=employee.id %}" class="btn btn-info">
+                                        <span id="spinner{{ employee.id }}" class="fa fa-pencil"></span>
+                                    </a>
+                                    
                                     {% if not employee.status %}
                                     <a onclick="delete_qualification({{academic_qualification.id}})">
                                         <button class="btn btn-danger">
